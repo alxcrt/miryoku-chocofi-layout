@@ -11,12 +11,27 @@
 #   - board: nice_nano_v2
 #     shield: reviung41
 #
+# include:
+#   - board: nice_nano//zmk
+#     shield: corne_left nice_view_adapter nice_view_gem
+#   - board: nice_nano//zmk
+#     shield: corne_right nice_view_adapter nice_view_gem
+#   - board: nice_nano//zmk
+#     shield: settings_reset
+#   - board: xiao_ble//zmk
+#     shield: nice_nano_dongle prospector_adapter
+
 include:
   - board: nice_nano//zmk
     shield: corne_left nice_view_adapter nice_view_gem
   - board: nice_nano//zmk
     shield: corne_right nice_view_adapter nice_view_gem
   - board: nice_nano//zmk
+    shield: corne_left nice_view_adapter nice_view
+  - board: nice_nano//zmk
+    shield: corne_right nice_view_adapter nice_view
+  - board: nice_nano//zmk
     shield: settings_reset
   - board: xiao_ble//zmk
-    shield: nice_nano_dongle prospector_adapter
+    shield: corne_dongle prospector_adapter
+
