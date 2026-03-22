@@ -9,13 +9,12 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: v0.3
       import: app/west.yml
     - name: urchin-peripheral-animation
       remote: sgomezsal
       revision: main
     - name: prospector-zmk-module                
       remote: carrefinho                          
-      revision: main                              
+      revision: feat/new-status-screens                              
   self:
     path: config
