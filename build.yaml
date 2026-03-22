@@ -31,7 +31,6 @@ include:
     shield: corne_right nice_view_adapter nice_view
 
 # Dongle mode - prospector dongle is primary/central with display, right is peripheral
-include:
   - board: seeeduino_xiao_ble
     shield: corne_central_dongle prospector_adapter
 
