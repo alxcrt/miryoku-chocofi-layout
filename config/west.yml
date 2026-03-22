@@ -2,8 +2,8 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: sgomezsal
-      url-base: https://github.com/sgomezsal
+    - name: m165437
+      url-base: https://github.com/M165437
     - name: carrefinho
       url-base: https://github.com/carrefinho
   projects:
@@ -11,8 +11,8 @@ manifest:
       remote: zmkfirmware
       revision: main
       import: app/west.yml
-    - name: urchin-peripheral-animation
-      remote: sgomezsal
+    - name: nice-view-gem
+      remote: m165437
       revision: main
     - name: prospector-zmk-module
       remote: carrefinho
