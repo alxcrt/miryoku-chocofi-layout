@@ -4,18 +4,18 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: sgomezsal
       url-base: https://github.com/sgomezsal
-    - name: carrefinho                           
-        url-base: https://github.com/carrefinho    
+    - name: carrefinho
+      url-base: https://github.com/carrefinho
   projects:
     - name: zmk
       remote: zmkfirmware
-      import: app/west.yml
       revision: main
+      import: app/west.yml
     - name: urchin-peripheral-animation
       remote: sgomezsal
       revision: main
-    - name: prospector-zmk-module                
-      remote: carrefinho                          
-      revision: feat/new-status-screens                              
+    - name: prospector-zmk-module
+      remote: carrefinho
+      revision: feat/new-status-screens
   self:
     path: config
