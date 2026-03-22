@@ -2,20 +2,20 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: m165437
-      url-base: https://github.com/M165437
     - name: carrefinho
       url-base: https://github.com/carrefinho
+    - name: mctechnology17
+      url-base: https://github.com/mctechnology17
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: main
       import: app/west.yml
-    - name: nice-view-gem
-      remote: m165437
-      revision: main
     - name: prospector-zmk-module
       remote: carrefinho
       revision: feat/new-status-screens
+    - name: zmk-config
+      remote: mctechnology17
+      revision: main
   self:
     path: config
