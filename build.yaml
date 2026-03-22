@@ -35,10 +35,10 @@ include:
   - board: seeeduino_xiao_ble
     shield: corne_central_dongle prospector_adapter
 
-  - board: nice_nano_v2
+  - board: nice_nano//zmk
     shield: corne_peripheral_left nice_view_adapter nice_view
 
-  - board: nice_nano_v2
+  - board: nice_nano//zmk
     shield: corne_peripheral_right nice_view_adapter nice_view
 
 # Settings reset for both board types
