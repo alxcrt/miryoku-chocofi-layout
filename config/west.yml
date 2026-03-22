@@ -4,6 +4,8 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: sgomezsal
       url-base: https://github.com/sgomezsal
+    - name: carrefinho                           
+        url-base: https://github.com/carrefinho    
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -12,5 +14,8 @@ manifest:
     - name: urchin-peripheral-animation
       remote: sgomezsal
       revision: main
+    - name: prospector-zmk-module                
+      remote: carrefinho                          
+      revision: main                              
   self:
     path: config
