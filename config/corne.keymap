@@ -57,10 +57,10 @@
             //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
 
             bindings = <
-&none  &kp Q                   &kp W            &kp F         &kp P              &kp B        &kp J        &kp L               &kp U         &kp Y        &kp APOS                    &none
-&none  &hml LGUI A             &hml LEFT_ALT R  &hml LCTRL S  &hml LEFT_SHIFT T  &kp G        &kp M        &hmr RIGHT_SHIFT N  &hmr RCTRL E  &hmr LALT I  &hmr LGUI O                 &none
-&none  &mt LS(LA(LC(LGUI))) Z  &kp X            &kp C         &kp D              &kp V        &kp K        &kp H               &kp COMMA     &kp DOT      &mt RS(RA(RC(RGUI))) SLASH  &none
-                                                &lt 4 ESC     &lt 1 SPACE        &lt 2 TAB    &lt 6 ENTER  &lt 5 BACKSPACE     &lt 7 DELETE
+&none  &kp Q                    &kp W            &kp F         &kp P              &kp B        &kp J        &kp L               &kp U         &kp Y        &kp APOS                     &none
+&none  &hml LGUI A              &hml LEFT_ALT R  &hml LCTRL S  &hml LEFT_SHIFT T  &kp G        &kp M        &hmr RIGHT_SHIFT N  &hmr RCTRL E  &hmr LALT I  &hmr LGUI O                  &none
+&none  &hml LS(LA(LC(LGUI))) Z  &kp X            &kp C         &kp D              &kp V        &kp K        &kp H               &kp COMMA     &kp DOT      &hmr RS(RA(RC(RGUI))) SLASH  &none
+                                                 &lt 4 ESC     &lt 1 SPACE        &lt 2 TAB    &lt 6 ENTER  &lt 5 BACKSPACE     &lt 7 DELETE
             >;
 
             label = "Base";
