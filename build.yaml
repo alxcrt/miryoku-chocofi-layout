@@ -1,46 +1,23 @@
-# This file generates the GitHub Actions matrix
-# For simple board + shield combinations, add them
-# to the top level board and shield arrays, for more
-# control, add individual board + shield combinations to
-# the `include` property, e.g:
-#
-# board: [ "nice_nano_v2" ]
-# shield: [ "corne_left", "corne_right" ]
-# include:
-#   - board: bdn9_rev2
-#   - board: nice_nano_v2
-#     shield: reviung41
-#
-# include:
-#   - board: nice_nano//zmk
-#     shield: corne_left nice_view_adapter nice_view_gem
-#   - board: nice_nano//zmk
-#     shield: corne_right nice_view_adapter nice_view_gem
-#   - board: nice_nano//zmk
-#     shield: settings_reset
-#   - board: xiao_ble//zmk
-#     shield: nice_nano_dongle prospector_adapter
-
+# Dongle mode: Prospector (XIAO BLE) is central, both halves are peripherals.
+# No dongle: flash corne_left_standalone on the left half (right half firmware is the same).
+# When switching modes, flash settings_reset on every part first, then the real firmware.
 include:
-# Left keyboard - same for all modes (always peripheral)
+  - board: xiao_ble//zmk
+    shield: corne_dongle prospector_adapter
+
   - board: nice_nano//zmk
     shield: corne_left nice_view_adapter nice_view
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+    artifact-name: corne_left_dongle
 
-# Standalone mode - right keyboard is primary/central
   - board: nice_nano//zmk
     shield: corne_right nice_view_adapter nice_view
-
-# Dongle mode - prospector dongle is primary/central with display, right is peripheral
-  - board: xiao_ble//zmk
-    shield: corne_central_dongle prospector_adapter
+    artifact-name: corne_right
 
   - board: nice_nano//zmk
-    shield: corne_peripheral_left nice_view_adapter nice_view
+    shield: corne_left nice_view_adapter nice_view
+    artifact-name: corne_left_standalone
 
-  - board: nice_nano//zmk
-    shield: corne_peripheral_right nice_view_adapter nice_view
-
-# Settings reset for both board types
   - board: nice_nano//zmk
     shield: settings_reset
 
