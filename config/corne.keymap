@@ -12,12 +12,17 @@
 #include <dt-bindings/zmk/pointing.h>
 #include <input/processors.dtsi>
 
-/* Mouse feel. Two knobs plus a multiplier - ZMK has no others.
- * time-to-max-speed-ms: how long the cursor takes to ramp from 0 to full speed.
- *   Longer = more time spent slow = finer aim on a short tap. ZMK default is 300.
- * acceleration-exponent: 1 = accelerating (default), 0 = constant speed from the first ms.
- * zip_xy_scaler M D: multiplies every movement by M/D. This is the top-speed knob.
- *   Both args must stay <= 16 or the maths overflows.
+/* Mouse feel. ZMK's curve is: speed(t) = max * (t / time-to-max-speed-ms) ^ exponent,
+ * capped at max once t passes the ramp. Stock is max 600, ramp 300ms, exponent 1.
+ *
+ * Doubling the ramp (300 -> 600) and doubling the scaler cancel out for the first
+ * 300ms, so taps shorter than that move EXACTLY as far as stock. What changes is
+ * that a hold no longer plateaus at 300ms - it keeps accelerating to 2x the old
+ * top speed. Precision unchanged, ceiling raised.
+ *
+ * To actually slow the start: raise the ramp past 2x the scaler (e.g. 900 with
+ * scaler 2 1), or set acceleration-exponent = <2> for a much flatter opening.
+ * zip_xy_scaler M D multiplies every movement by M/D; both args must stay <= 16.
  * Delete this block to go back to stock - nothing is persisted on the board. */
 &mmv {
     time-to-max-speed-ms = <600>;
