@@ -109,9 +109,9 @@
         mac_layer {
             // Right top: capture/Clicks. Right bottom: one-shot Hyper / held Hyper.
             bindings = <
-&launcher LS(LA(LC(LGUI))) LG(SPACE)  &kp Q        &kp W            &kp F         &kp P              &kp B    &kp J  &kp L               &kp U         &kp Y        &kp APOS     &lt 4 LG(LS(N5))
-&caps_word                &hml LGUI A  &hml LEFT_ALT R  &hml LCTRL S  &hml LEFT_SHIFT T  &kp G    &kp M  &hmr RIGHT_SHIFT N  &hmr RCTRL E  &hmr LALT I  &hmr LGUI O  &kp LS(LA(LC(LG(V))))
-&kp LG(GRAVE)                       &kp Z        &kp X            &kp C         &kp D              &kp V    &kp K  &kp H               &kp COMMA     &kp DOT      &kp SLASH    &hyper LS(LA(LC(LGUI))) LS(LA(LC(LGUI)))
+&kp LG(GRAVE)                         &kp Q        &kp W            &kp F         &kp P              &kp B  &kp J  &kp L               &kp U         &kp Y        &kp APOS     &lt 4 LG(LS(N5))
+&caps_word                            &hml LGUI A  &hml LEFT_ALT R  &hml LCTRL S  &hml LEFT_SHIFT T  &kp G  &kp M  &hmr RIGHT_SHIFT N  &hmr RCTRL E  &hmr LALT I  &hmr LGUI O  &kp LS(LA(LC(LG(V))))
+&launcher LS(LA(LC(LGUI))) LG(SPACE)  &kp Z        &kp X            &kp C         &kp D              &kp V  &kp K  &kp H               &kp COMMA     &kp DOT      &kp SLASH    &hyper LS(LA(LC(LGUI))) LS(LA(LC(LGUI)))
                                                     &lt 5 ESC     &lt 2 SPACE        &lt 3 TAB    &lt 7 ENTER  &lt 6 BACKSPACE     &lt 8 DELETE
             >;
 
@@ -120,11 +120,11 @@
         };
 
         omarchy_layer {
-            // Same functions: menu/Super, clipboard, scratchpad, browser, screenshot.
+            // Same positions: scratchpad/capture, Caps Word/clipboard, menu/Super.
             bindings = <
-&launcher LGUI LG(SPACE)  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &lt 4 LG(LC(C))
-&caps_word            &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &kp LG(LC(V))
-&kp LG(GRAVE)            &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &hyper LGUI LGUI
+&kp LG(GRAVE)             &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &lt 4 LG(LC(C))
+&caps_word                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp LG(LC(V))
+&launcher LGUI LG(SPACE)  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &hyper LGUI LGUI
                                  &trans  &trans  &trans    &trans  &trans  &trans
             >;
 

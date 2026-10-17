@@ -8,13 +8,13 @@
 
 | Position | Mac left | Mac right | Omarchy left | Omarchy right |
 | --- | --- | --- | --- | --- |
-| Top | Tap Raycast; hold Hyper | Capture menu; hold Clicks | Tap menu; hold Super | Capture menu; hold Clicks |
+| Top | Quick terminal | Capture menu; hold Clicks | Scratchpad | Capture menu; hold Clicks |
 | Middle | Caps Word | Clipboard history | Caps Word | Clipboard manager |
-| Bottom | Quick terminal | Tap one-shot Hyper; hold Hyper | Scratchpad | Tap one-shot Super; hold Super |
+| Bottom | Tap Raycast; hold Hyper | Tap one-shot Hyper; hold Hyper | Tap menu; hold Super | Tap one-shot Super; hold Super |
 
 Mac quick terminal: **Command + backtick (`)**. Linux scratchpad: **Super + backtick**; put a terminal there first with **Super + Shift + backtick**.
 
-Left top taps the launcher and holds Hyper/Super. Right bottom taps one-shot Hyper/Super: release it, then press the shortcut within 1.5 seconds. It releases after that target key press, or times out unused; it does not lock. Hold it for an ordinary modifier chord. Left top has a 180 ms hold-preferred term; capture/Clicks has the default 200 ms layer-tap.
+Left bottom taps the launcher and holds Hyper/Super. Right bottom taps one-shot Hyper/Super: release it, then press the shortcut within 1.5 seconds. It releases after that target key press, or times out unused; it does not lock. Hold it for an ordinary modifier chord. Left bottom has a 180 ms hold-preferred term; capture/Clicks has the default 200 ms layer-tap.
 
 ## Caps Word
 
@@ -34,7 +34,7 @@ Tap the left-middle outer key for uppercase words and identifiers such as `MY_VA
 
 ## Hyper - Mac
 
-**Hyper = left Control + Option/Alt + Shift + Command.** The left-top and right-bottom outer keys provide it. Z and / type normally.
+**Hyper = left Control + Option/Alt + Shift + Command.** Both bottom outer keys provide it. Z and / type normally.
 
 | Hyper + | Opens |
 | --- | --- |

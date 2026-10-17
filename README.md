@@ -69,11 +69,11 @@ host; they are not extra layers to remember or activate by hand.
 
 | Outer row | Left, Mac | Right, Mac | Left, Omarchy | Right, Omarchy |
 | --- | --- | --- | --- | --- |
-| Top | Tap: Raycast (`⌘Space`); hold: Hyper | Capture menu (`⌘⇧5`); hold: Clicks | Tap: Omarchy menu (`Super+Space`); hold: Super | Capture menu (`Super+Ctrl+C`); hold: Clicks |
+| Top | Quick terminal (`⌘` + backtick) | Capture menu (`⌘⇧5`); hold: Clicks | Scratchpad (`Super` + backtick) | Capture menu (`Super+Ctrl+C`); hold: Clicks |
 | Middle | Caps Word | Clipboard History (`Hyper+V`) | Caps Word | Clipboard manager (`Super+Ctrl+V`) |
-| Bottom | Quick terminal (`⌘` + backtick) | Tap: one-shot Hyper; hold: Hyper | Scratchpad (`Super` + backtick) | Tap: one-shot Super; hold: Super |
+| Bottom | Tap: Raycast (`⌘Space`); hold: Hyper | Tap: one-shot Hyper; hold: Hyper | Tap: Omarchy menu (`Super+Space`); hold: Super | Tap: one-shot Super; hold: Super |
 
-All outer keys remain available on the other layers. The left top key uses a
+All outer keys remain available on the other layers. The left bottom key uses a
 180 ms hold-preferred behavior: another key press selects Hyper/Super
 immediately; a tap opens the launcher on release. It has no home-row prior-idle
 or opposite-hand restriction. The right bottom key also uses a 180 ms
@@ -87,7 +87,7 @@ modifiers. The top right capture key uses the default 200 ms layer-tap.
 The image above illustrates the typing core; this table describes its six
 additional utility keys.
 
-`Z` and `/` are ordinary keys. The left top / right bottom Hyper keys and the direct layer
+`Z` and `/` are ordinary keys. Both bottom outer Hyper keys and the direct layer
 Hyper bindings send **left Ctrl + Alt/Option + Shift + GUI/Command**:
 `LS(LA(LC(LGUI)))`. The active local Omarchy Mac `hidutil` mapping changes
 right Command to left Option (`~/omarchy-mac/local/bin/mac-keyremap`), which

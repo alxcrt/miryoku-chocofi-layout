@@ -52,17 +52,18 @@ SYSTEM = [('Q / W','Mac / Omarchy','Mac / Omarchy'),
           ('F','Omarchy menu','Omarchy menu'),('P','Fullscreen capture','Record / stop'),
           ('B','Capture menu','Screenshot OCR'),('J','Ghostty','Terminal'),
           ('L','Helium','Browser'),('U','Shortcut guide','Keybindings'),('Y','Area capture','Screenshot')]
-OUTER = [('Top','Tap Raycast; hold Hyper','Capture menu; hold Clicks', 'Tap menu; hold Super','Capture menu; hold Clicks'),
+OUTER = [('Top','Quick terminal','Capture menu; hold Clicks', 'Scratchpad','Capture menu; hold Clicks'),
          ('Middle','Caps Word','Clipboard history','Caps Word','Clipboard manager'),
-         ('Bottom','Quick terminal','Tap one-shot Hyper; hold Hyper','Scratchpad','Tap one-shot Super; hold Super')]
+         ('Bottom','Tap Raycast; hold Hyper','Tap one-shot Hyper; hold Hyper','Tap menu; hold Super','Tap one-shot Super; hold Super')]
 
 # Guard against silently rendering a reference for a different-sized layout.
 parsed = {}
 for m in re.finditer(r'(\w+)_layer\s*\{\s*(?://[^\n]*\n\s*)?bindings\s*=\s*<([\s\S]*?)>;', SOURCE):
     parsed[m[1]] = [' '.join(x.split()) for x in re.findall(r'&\w+(?:\s+[^&]+)?',m[2])]
 assert len(parsed) == 13 and all(len(v) == 42 for v in parsed.values())
-assert parsed['mac'][24] == '&kp LG(GRAVE)' and parsed['omarchy'][24] == '&kp LG(GRAVE)'
-assert parsed['mac'][0] == '&launcher LS(LA(LC(LGUI))) LG(SPACE)'
+assert parsed['mac'][0] == '&kp LG(GRAVE)' and parsed['omarchy'][0] == '&kp LG(GRAVE)'
+assert parsed['mac'][24] == '&launcher LS(LA(LC(LGUI))) LG(SPACE)'
+assert parsed['omarchy'][24] == '&launcher LGUI LG(SPACE)'
 assert parsed['mac'][11] == '&lt 4 LG(LS(N5))'
 assert parsed['omarchy'][11] == '&lt 4 LG(LC(C))'
 assert parsed['mac'][35] == '&hyper LS(LA(LC(LGUI))) LS(LA(LC(LGUI)))'
@@ -116,7 +117,7 @@ W,H=A4
 INK=colors.HexColor('#172D3B'); TEAL=colors.HexColor('#087E83')
 MUTED=colors.HexColor('#526572'); LINE=colors.HexColor('#D8E2E6')
 PALE=colors.HexColor('#F1F6F7'); PAPER=colors.HexColor('#FCFDFC')
-C=canvas.Canvas(str(OUT), pagesize=A4)
+C=canvas.Canvas(str(OUT), pagesize=A4, invariant=1)
 C.setTitle('Corne - Mac and Omarchy cheat sheet')
 C.setAuthor('Alex')
 
@@ -179,7 +180,7 @@ text(120,713,'Hold Escape + Q = Mac     |     Hold Escape + W = Omarchy',9,True)
 text(40,684,'BASE / MAC UTILITIES',10,True)
 kw,gap,split=35,4,32
 start=(W-(12*kw+10*gap+split))/2
-leftouter=[('Raycast','H: Hyper'),('Caps Word','UPPER_CASE'),('Quick term','Cmd + `')]
+leftouter=[('Quick term','Cmd + `'),('Caps Word','UPPER_CASE'),('Raycast','H: Hyper')]
 rightouter=[('Capture','H: Clicks'),('Clipboard',''),('Hyper','Tap: 1-shot')]
 mods={'A':'H: Cmd','R':'H: Alt','S':'H: Ctrl','T':'H: Shift','N':'H: Shift','E':'H: Ctrl','I':'H: Alt','O':'H: Cmd'}
 for row,letters in enumerate(BASE):
@@ -195,9 +196,9 @@ text(40,525,'H = hold. Right bottom: tap, then a shortcut within 1.5 sec; or hol
 
 heading(40,503,'Six outer keys - same purpose on both hosts')
 table(40,491,W-80,['Position','Mac: left / right','Omarchy: left / right'],[
- ('Top','Raycast/Hyper  |  Capture/Clicks','Menu/Super  |  Capture/Clicks'),
+ ('Top','Quick terminal  |  Capture/Clicks','Scratchpad  |  Capture/Clicks'),
  ('Middle','Caps Word  |  Clipboard','Caps Word  |  Clipboard'),
- ('Bottom','Quick terminal  |  Sticky Hyper','Scratchpad  |  Sticky Super')], [.13,.435,.435],rh=23,size=8)
+ ('Bottom','Raycast/Hyper  |  Sticky Hyper','Menu/Super  |  Sticky Super')], [.13,.435,.435],rh=23,size=8)
 
 heading(40,378,'Hyper shortcuts - Mac')
 text(40,363,'Hyper = left Ctrl + Alt + Shift + Cmd',8,color=TEAL)
@@ -249,11 +250,11 @@ md=['# Corne cheat sheet','',
     '| --- | --- | --- | --- | --- |']
 md += ['| '+' | '.join(r)+' |' for r in OUTER]
 md += ['', 'Mac quick terminal: **Command + backtick (`)**. Linux scratchpad: **Super + backtick**; put a terminal there first with **Super + Shift + backtick**.',
-       '', 'Left top taps the launcher and holds Hyper/Super. Right bottom taps one-shot Hyper/Super: release it, then press the shortcut within 1.5 seconds. It releases after that target key press, or times out unused; it does not lock. Hold it for an ordinary modifier chord. Left top has a 180 ms hold-preferred term; capture/Clicks has the default 200 ms layer-tap.',
+       '', 'Left bottom taps the launcher and holds Hyper/Super. Right bottom taps one-shot Hyper/Super: release it, then press the shortcut within 1.5 seconds. It releases after that target key press, or times out unused; it does not lock. Hold it for an ordinary modifier chord. Left bottom has a 180 ms hold-preferred term; capture/Clicks has the default 200 ms layer-tap.',
        '', '## Caps Word', '', 'Tap the left-middle outer key for uppercase words and identifiers such as `MY_VARIABLE`. Letters, digits, underscores, Backspace and Delete continue it. A space or another separator ends it; tap Caps Word again to turn it off. This is word-by-word capitalization, not a persistent Caps Lock. Browser access remains on Hyper+B (Mac) or System + L.', '', '## Thumb layers','', '| Tap key; hold for | Layer |','| --- | --- |']
 md += [f'| {a} | {b} |' for a,b in THUMBS]
 md += ['| Outer top-right | Clicks |','', '## Hyper - Mac','',
-       '**Hyper = left Control + Option/Alt + Shift + Command.** The left-top and right-bottom outer keys provide it. Z and / type normally.','', '| Hyper + | Opens |','| --- | --- |']
+       '**Hyper = left Control + Option/Alt + Shift + Command.** Both bottom outer keys provide it. Z and / type normally.','', '| Hyper + | Opens |','| --- | --- |']
 md += [f'| {a} | {b} |' for a,b in HYPER]
 md += ['', '## System - hold Escape','', '| Base letter | Mac | Omarchy |','| --- | --- | --- |']
 md += ['| '+' | '.join(r)+' |' for r in SYSTEM]
