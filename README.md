@@ -98,8 +98,8 @@ verified in Settings on 18 October 2026:
 | --- | --- | --- | --- |
 | V | Clipboard History | B | Helium |
 | T | Ghostty | W | cmux workspaces |
-| A | ChatGPT | D | Claude |
-| C | VS Code (existing) | L | Linear (existing) |
+| A | ChatGPT | C | Claude |
+| E | VS Code | L | Linear (existing) |
 | P | Bitwarden | M | IINA |
 | O | Omarchy menu | K | Shortcut guide |
 
