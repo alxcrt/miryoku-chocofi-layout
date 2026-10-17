@@ -35,6 +35,15 @@
 
 / {
     behaviors {
+        launcher: launcher_hyper {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <180>;
+            quick-tap-ms = <0>;
+        };
+
         hml: homewrow_mods_left {
             compatible = "zmk,behavior-hold-tap";
             label = "HOMEROW_MODS_LEFT_HAND";
@@ -79,11 +88,11 @@
         compatible = "zmk,keymap";
 
         mac_layer {
-            // Mac: outer top keys are dedicated Hyper; Z and / are ordinary keys.
+            // Left top: tap Raycast, hold Hyper. Right top: immediate Hyper.
             bindings = <
-&kp LS(LA(LC(LGUI)))  &kp Q        &kp W            &kp F         &kp P              &kp B    &kp J  &kp L               &kp U         &kp Y        &kp APOS     &kp LS(LA(LC(LGUI)))
-&kp LC(LEFT)          &hml LGUI A  &hml LEFT_ALT R  &hml LCTRL S  &hml LEFT_SHIFT T  &kp G    &kp M  &hmr RIGHT_SHIFT N  &hmr RCTRL E  &hmr LALT I  &hmr LGUI O  &kp LG(LS(N4))
-&kp LC(RIGHT)         &kp Z        &kp X            &kp C         &kp D              &kp V    &kp K  &kp H               &kp COMMA     &kp DOT      &kp SLASH    &lt 4 LG(LS(N5))
+&launcher LS(LA(LC(LGUI))) LG(SPACE)  &kp Q        &kp W            &kp F         &kp P              &kp B    &kp J  &kp L               &kp U         &kp Y        &kp APOS     &kp LS(LA(LC(LGUI)))
+&kp LS(LA(LC(LG(V))))                &hml LGUI A  &hml LEFT_ALT R  &hml LCTRL S  &hml LEFT_SHIFT T  &kp G    &kp M  &hmr RIGHT_SHIFT N  &hmr RCTRL E  &hmr LALT I  &hmr LGUI O  &kp LS(LA(LC(LG(B))))
+&kp LG(GRAVE)                       &kp Z        &kp X            &kp C         &kp D              &kp V    &kp K  &kp H               &kp COMMA     &kp DOT      &kp SLASH    &lt 4 LG(LS(N4))
                                                     &lt 5 ESC     &lt 2 SPACE        &lt 3 TAB    &lt 7 ENTER  &lt 6 BACKSPACE     &lt 8 DELETE
             >;
 
@@ -92,11 +101,11 @@
         };
 
         omarchy_layer {
-            // Omarchy Linux: Super, workspaces, screenshot and capture menu.
+            // Same functions: menu/Super, clipboard, scratchpad, browser, screenshot.
             bindings = <
-&kp LGUI         &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &kp LGUI
-&kp LG(LS(TAB))  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &kp PSCRN
-&kp LG(TAB)      &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &lt 4 LG(LC(C))
+&launcher LGUI LG(SPACE)  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &kp LGUI
+&kp LG(LC(V))            &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &kp LG(LS(ENTER))
+&kp LG(GRAVE)            &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &lt 4 PSCRN
                                  &trans  &trans  &trans    &trans  &trans  &trans
             >;
 
@@ -106,7 +115,7 @@
 
         navigate_layer {
             bindings = <
-&trans  &none                 &none         &none      &none           &none    &kp LG(LS(Z))  &kp LG(V)      &kp LG(C)      &kp LG(X)    &kp LG(Z)  &trans
+&trans  &kp LC(UP)            &kp LC(LEFT)  &kp LC(RIGHT)  &none        &none    &kp LG(LS(Z))  &kp LG(V)      &kp LG(C)      &kp LG(X)    &kp LG(Z)  &trans
 &trans  &kp LGUI              &kp LEFT_ALT  &kp LCTRL  &kp LEFT_SHIFT  &none    &kp CAPSLOCK   &kp LEFT       &kp DOWN       &kp UP       &kp RIGHT  &trans
 &trans  &kp LS(LA(LC(LGUI)))  &none         &none      &none           &none    &kp INSERT     &kp C_AC_HOME  &kp PAGE_DOWN  &kp PAGE_UP  &kp END    &trans
                                             &none      &none           &none    &kp ENTER      &kp BACKSPACE  &kp DELETE
@@ -143,7 +152,7 @@
         system_layer {
             // Hold Escape, then Q for Mac or W for Omarchy.
             bindings = <
-&trans  &to 0                 &to 1         &kp LC(UP)  &kp LG(LS(N3))  &kp LG(LS(N5))    &none              &none           &none              &none            &none       &trans
+&trans  &to 0                 &to 1         &kp LS(LA(LC(LG(O))))  &kp LG(LS(N3))  &kp LG(LS(N5))    &kp LS(LA(LC(LG(T))))  &kp LS(LA(LC(LG(B))))  &kp LS(LA(LC(LG(K))))  &none  &none  &trans
 &trans  &kp LGUI              &kp LEFT_ALT  &kp LCTRL   &kp LEFT_SHIFT  &none             &ext_power EP_TOG  &kp C_PREVIOUS  &kp C_VOLUME_DOWN  &kp C_VOLUME_UP  &kp C_NEXT  &trans
 &trans  &kp LS(LA(LC(LGUI)))  &none         &none       &none           &none             &out OUT_TOG       &bt BT_SEL 0    &bt BT_SEL 1       &bt BT_SEL 2     &bt BT_CLR  &trans
                                             &none       &none           &none             &kp C_PLAY_PAUSE   &kp C_NEXT      &kp K_MUTE
@@ -191,7 +200,7 @@
 
         omarchy_navigate_layer {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans    &kp LC(LS(Z))  &kp LG(V)  &kp LG(C)  &kp LG(X)  &kp LC(Z)  &trans
+&trans  &none  &kp LG(LS(TAB))  &kp LG(TAB)  &trans  &trans    &kp LC(LS(Z))  &kp LG(V)  &kp LG(C)  &kp LG(X)  &kp LC(Z)  &trans
 &trans  &trans  &trans  &trans  &trans  &trans    &trans         &trans     &trans     &trans     &trans     &trans
 &trans  &trans  &trans  &trans  &trans  &trans    &trans         &trans     &trans     &trans     &trans     &trans
                         &trans  &trans  &trans    &trans         &trans     &trans
@@ -227,7 +236,7 @@
 
         omarchy_system_layer {
             bindings = <
-&trans  &trans  &trans  &kp LG(SPACE)  &kp LA(PSCRN)  &kp LG(LC(PSCRN))    &kp LG(ENTER)  &kp LG(LS(ENTER))  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &kp LG(SPACE)  &kp LA(PSCRN)  &kp LG(LC(PSCRN))    &kp LG(ENTER)  &kp LG(LS(ENTER))  &kp LG(K)  &trans  &trans  &trans
 &trans  &trans  &trans  &trans         &trans         &trans               &trans         &trans             &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans         &trans         &trans               &trans         &trans             &trans  &trans  &trans  &trans
                         &trans         &trans         &trans               &trans         &trans             &trans

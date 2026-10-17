@@ -67,29 +67,48 @@ host; they are not extra layers to remember or activate by hand.
 
 | Outer row | Left, Mac | Right, Mac | Left, Omarchy | Right, Omarchy |
 | --- | --- | --- | --- | --- |
-| Top | Dedicated Hyper | Dedicated Hyper | Super | Super |
-| Middle | Previous Desktop (`⌃←`) | CleanShot area (`⌘⇧4`) | Previous workspace (`Super+Shift+Tab`) | Screenshot (`Print`) |
-| Bottom | Next Desktop (`⌃→`) | Capture menu (`⌘⇧5`); hold: Clicks | Next workspace (`Super+Tab`) | Capture menu (`Super+Ctrl+C`); hold: Clicks |
+| Top | Tap: Raycast (`⌘Space`); hold: Hyper | Immediate Hyper | Tap: Omarchy menu (`Super+Space`); hold: Super | Immediate Super |
+| Middle | Clipboard History (`Hyper+V`) | Helium browser (`Hyper+B`) | Clipboard manager (`Super+Ctrl+V`) | Browser (`Super+Shift+Enter`) |
+| Bottom | Quick terminal (`⌘` + backtick) | CleanShot area (`⌘⇧4`); hold: Clicks | Scratchpad (`Super` + backtick) | Screenshot (`Print`); hold: Clicks |
 
-All outer keys remain available on the other layers. The bottom right key's
-layer-tap uses ZMK's default 200 ms tapping term. The image above illustrates
-the typing core; the table describes the six additional utility keys.
+All outer keys remain available on the other layers. The left top key uses a
+180 ms hold-preferred behavior: another key press selects Hyper/Super
+immediately; a tap opens the launcher on release. It has no home-row prior-idle
+or opposite-hand restriction. Use the right top key for an immediate modifier
+with no tap behavior. The bottom right key uses the default 200 ms layer-tap.
+The image above illustrates the typing core; this table describes its six
+additional utility keys.
 
-`Z` and `/` are now ordinary keys. **Hyper has moved to the two dedicated
-outer top keys** in Mac mode. Both send left Ctrl + Alt/Option + Shift +
-GUI/Command: `LS(LA(LC(LGUI)))`. They respond on press, without a tapping term,
-prior-idle guard or opposite-hand restriction. Existing direct layer Hyper
-bindings use the same left modifiers.
-
-The active local Omarchy Mac `hidutil` mapping changes right Command to left
-Option (`~/omarchy-mac/local/bin/mac-keyremap`). That can remove Command from
-the former all-right Hyper chord. Left Command avoids this remap. No Mac
-remaps or app preferences are changed by the firmware update.
+`Z` and `/` are ordinary keys. Both outer Hyper keys and the direct layer
+Hyper bindings send **left Ctrl + Alt/Option + Shift + GUI/Command**:
+`LS(LA(LC(LGUI)))`. The active local Omarchy Mac `hidutil` mapping changes
+right Command to left Option (`~/omarchy-mac/local/bin/mac-keyremap`), which
+can remove Command from an all-right Hyper chord. Left Command avoids it.
 
 The ordinary home-row modifiers retain their existing 280 ms tapping term,
 175 ms quick-tap, 150 ms prior-idle guard, balanced flavor, opposite-hand
-triggers and `hold-while-undecided`. Those typing safeguards do not apply to
-the new dedicated Hyper keys.
+triggers and `hold-while-undecided`.
+
+The Mac integration is in
+[`omarchy-mac`](https://github.com/alxcrt/omarchy-mac/blob/main/config/raycast/SETUP.md).
+Raycast's launcher is `⌘Space`; its app-owned hotkeys were configured and
+verified in Settings on 18 October 2026:
+
+| Hyper + | Action | Hyper + | Action |
+| --- | --- | --- | --- |
+| V | Clipboard History | B | Helium |
+| T | Ghostty | W | cmux workspaces |
+| A | ChatGPT | D | Claude |
+| C | VS Code (existing) | L | Linear (existing) |
+| P | Bitwarden | M | IINA |
+| O | Omarchy menu | K | Shortcut guide |
+
+Ghostty already configures `global:cmd+grave_accent=toggle_quick_terminal`.
+It requires Ghostty running with its global shortcut registered; live show/hide
+still needs testing on the Mac. This computer-use environment blocks Ghostty.
+Omarchy's matching key toggles the **scratchpad**, which shows whatever window
+you put there; send a terminal there with `Super+Shift+backtick` first. It does
+not create a terminal automatically.
 
 ### Editing and System shortcuts
 
@@ -105,15 +124,19 @@ The System layer adds these shortcuts, using the letters printed by Base:
 | Hold Escape + | Mac | Omarchy |
 | --- | --- | --- |
 | Q / W | Select Mac / Omarchy mode | Select Mac / Omarchy mode |
-| F | Mission Control | Omarchy menu |
+| F | Omarchy menu (`Hyper+O`) | Omarchy menu |
 | P | CleanShot fullscreen | Screen recording menu / stop recording |
 | B | CleanShot All-In-One | Screenshot text recognition (OCR) |
-| J / L | Unassigned | Terminal / browser |
+| J / L | Ghostty / Helium | Terminal / browser |
+| U | Shortcut guide (`Hyper+K`) | Keybindings (`Super+K`) |
+
+Hold **Space + Q** for Mission Control on Mac; **Space + W / F** switches
+previous / next Desktop on Mac or workspace on Omarchy.
 
 CleanShot bindings were read from the local app's saved settings: area
 `⌘⇧4`, fullscreen `⌘⇧3`, All-In-One `⌘⇧5`. The Linux bindings were verified
 against upstream Omarchy
-[`5fcdaca`](https://github.com/omacom/omarchy/tree/5fcdaca6495cac8931e0624c88414c95e0247585/default/hypr/bindings):
+[`4a9c83d`](https://github.com/omacom/omarchy/tree/4a9c83deceb5bda84f706794c2ddc61084914fe0/default/hypr/bindings):
 `utilities.lua`, `tiling.lua`, `clipboard.lua` and `applications.lua`.
 They follow current stock Omarchy; local Linux overrides may require adjustments.
 
@@ -176,12 +199,12 @@ branch refs and the build container are not a complete dependency lock.
 
 ## Remaining hardware checks and layout decisions
 
-- Test the same Raycast shortcut with both dedicated outer Hyper keys and direct
+- Test the same Raycast shortcut with both outer Hyper keys and direct
   layer Hyper keys. Modifier sides match; recognition on the Mac needs testing.
 - Test ordinary `z` and `/`, home-row rolls, Hyper chords, host switching,
   automatic editing layers, capture-menu tap versus Clicks hold, wake/reconnect,
   battery readings and both dongle and standalone modes.
-  CleanShot must be running. Desktop switching needs existing Desktops; add them
+  CleanShot must be running. Test launcher taps versus Hyper holds and quick-terminal show/hide. Desktop switching needs existing Desktops; add them
   manually in Mission Control if needed. Linux commands need Omarchy running.
 - `config/boards/shields/corn/` is an older unused definition. Current builds use
   `config/boards/shields/corne/`; editing `corn/` has no effect.
