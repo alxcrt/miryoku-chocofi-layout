@@ -13,6 +13,8 @@
 &kscan0 {
     compatible = "zmk,kscan-gpio-matrix";
     wakeup-source;
+    debounce-press-ms = <1>;
+    debounce-release-ms = <5>;
 
     col-gpios
         = <&pro_micro 14  GPIO_ACTIVE_HIGH>

@@ -29,4 +29,9 @@ config ZMK_SPLIT
 config ZMK_BLE
     default y
 
+# Upstream Corne defaults SSD1306 on even without an OLED devicetree node.
+# Expose a prompt here so nice!view's CONFIG_SSD1306=n is actually respected.
+config SSD1306
+    bool "SSD1306 OLED on custom Corne"
+
 endif

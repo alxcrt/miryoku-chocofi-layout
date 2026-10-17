@@ -66,73 +66,94 @@
         };
     };
 
+    // Host mode selects editing shortcuts automatically when a shared layer is held.
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        omarchy_navigate { if-layers = <1 2>; then-layer = <9>; };
+        omarchy_mouse { if-layers = <1 3>; then-layer = <10>; };
+        omarchy_clicks { if-layers = <1 4>; then-layer = <11>; };
+        omarchy_system { if-layers = <1 5>; then-layer = <12>; };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
-        base_layer {
-            // Outer left: previous Desktop / Mission Control / next Desktop.
-            // Outer right: CleanShot area / fullscreen / menu (hold: Button layer).
-            // Both Hyper keys send left Ctrl + Alt + Shift + GUI for consistent host shortcuts.
+        mac_layer {
+            // Mac: outer top keys are dedicated Hyper; Z and / are ordinary keys.
             bindings = <
-&kp LC(LEFT)   &kp Q                    &kp W            &kp F         &kp P              &kp B    &kp J  &kp L               &kp U         &kp Y        &kp APOS                     &kp LG(LS(N4))
-&kp LC(UP)     &hml LGUI A              &hml LEFT_ALT R  &hml LCTRL S  &hml LEFT_SHIFT T  &kp G    &kp M  &hmr RIGHT_SHIFT N  &hmr RCTRL E  &hmr LALT I  &hmr LGUI O                  &kp LG(LS(N3))
-&kp LC(RIGHT)  &hml LS(LA(LC(LGUI))) Z  &kp X            &kp C         &kp D              &kp V    &kp K  &kp H               &kp COMMA     &kp DOT      &hmr LS(LA(LC(LGUI))) SLASH  &lt 3 LG(LS(N5))
-                                                         &lt 4 ESC     &lt 1 SPACE        &lt 2 TAB    &lt 6 ENTER  &lt 5 BACKSPACE     &lt 7 DELETE
+&kp LS(LA(LC(LGUI)))  &kp Q        &kp W            &kp F         &kp P              &kp B    &kp J  &kp L               &kp U         &kp Y        &kp APOS     &kp LS(LA(LC(LGUI)))
+&kp LC(LEFT)          &hml LGUI A  &hml LEFT_ALT R  &hml LCTRL S  &hml LEFT_SHIFT T  &kp G    &kp M  &hmr RIGHT_SHIFT N  &hmr RCTRL E  &hmr LALT I  &hmr LGUI O  &kp LG(LS(N4))
+&kp LC(RIGHT)         &kp Z        &kp X            &kp C         &kp D              &kp V    &kp K  &kp H               &kp COMMA     &kp DOT      &kp SLASH    &lt 4 LG(LS(N5))
+                                                    &lt 5 ESC     &lt 2 SPACE        &lt 3 TAB    &lt 7 ENTER  &lt 6 BACKSPACE     &lt 8 DELETE
             >;
 
-            label = "Base";
-            display-name = "Base";
+            label = "Mac";
+            display-name = "Mac";
         };
 
-        nav_layer {
+        omarchy_layer {
+            // Omarchy Linux: Super, workspaces, screenshot and capture menu.
             bindings = <
-&trans  &none                 &none         &none      &none           &none    &kp K_REDO    &kp K_PASTE    &kp K_COPY     &kp K_CUT    &kp K_UNDO  &trans
-&trans  &kp LGUI              &kp LEFT_ALT  &kp LCTRL  &kp LEFT_SHIFT  &none    &kp CAPSLOCK  &kp LEFT       &kp DOWN       &kp UP       &kp RIGHT   &trans
-&trans  &kp LS(LA(LC(LGUI)))  &none         &none      &none           &none    &kp INSERT    &kp C_AC_HOME  &kp PAGE_DOWN  &kp PAGE_UP  &kp END     &trans
-                                            &none      &none           &none    &kp ENTER     &kp BACKSPACE  &kp DELETE
+&kp LGUI         &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &kp LGUI
+&kp LG(LS(TAB))  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &kp PSCRN
+&kp LG(TAB)      &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &lt 4 LG(LC(C))
+                                 &trans  &trans  &trans    &trans  &trans  &trans
             >;
 
-            label = "Nav";
-            display-name = "Nav";
+            label = "Omarchy";
+            display-name = "Omarchy";
+        };
+
+        navigate_layer {
+            bindings = <
+&trans  &none                 &none         &none      &none           &none    &kp LG(LS(Z))  &kp LG(V)      &kp LG(C)      &kp LG(X)    &kp LG(Z)  &trans
+&trans  &kp LGUI              &kp LEFT_ALT  &kp LCTRL  &kp LEFT_SHIFT  &none    &kp CAPSLOCK   &kp LEFT       &kp DOWN       &kp UP       &kp RIGHT  &trans
+&trans  &kp LS(LA(LC(LGUI)))  &none         &none      &none           &none    &kp INSERT     &kp C_AC_HOME  &kp PAGE_DOWN  &kp PAGE_UP  &kp END    &trans
+                                            &none      &none           &none    &kp ENTER      &kp BACKSPACE  &kp DELETE
+            >;
+
+            label = "Navigate";
+            display-name = "Navigate";
         };
 
         mouse_layer {
             bindings = <
-&trans  &none                 &none         &none      &none           &none    &kp K_REDO  &kp K_PASTE     &kp K_COPY      &kp K_CUT     &kp K_UNDO       &trans
-&trans  &kp LGUI              &kp LEFT_ALT  &kp LCTRL  &kp LEFT_SHIFT  &none    &none       &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT  &trans
-&trans  &kp LS(LA(LC(LGUI)))  &none         &none      &none           &none    &none       &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &trans
-                                            &none      &none           &none    &mkp RCLK   &mkp LCLK       &mkp MCLK
+&trans  &none                 &none         &none      &none           &none    &kp LG(LS(Z))  &kp LG(V)       &kp LG(C)       &kp LG(X)     &kp LG(Z)        &trans
+&trans  &kp LGUI              &kp LEFT_ALT  &kp LCTRL  &kp LEFT_SHIFT  &none    &none          &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT  &trans
+&trans  &kp LS(LA(LC(LGUI)))  &none         &none      &none           &none    &none          &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &trans
+                                            &none      &none           &none    &mkp RCLK      &mkp LCLK       &mkp MCLK
             >;
 
             label = "Mouse";
             display-name = "Mouse";
         };
 
-        button_layer {
+        clicks_layer {
             bindings = <
-&trans  &kp C_AC_UNDO  &kp C_AC_CUT  &kp C_AC_COPY  &kp C_AC_PASTE  &kp C_AC_REDO    &kp C_AC_REDO  &kp C_AC_PASTE  &kp C_AC_COPY      &kp K_CUT     &kp C_AC_UNDO  &trans
-&trans  &kp LGUI       &kp LALT      &kp LCTRL      &kp LSHFT       &none            &none          &kp LSHFT       &kp RIGHT_CONTROL  &kp RALT      &kp LGUI       &trans
-&trans  &kp C_AC_UNDO  &kp C_AC_CUT  &kp C_AC_COPY  &kp C_AC_PASTE  &kp C_AC_REDO    &kp C_AC_REDO  &kp C_AC_PASTE  &kp C_AC_COPY      &kp C_AC_CUT  &kp C_AC_UNDO  &trans
-                                     &mkp MCLK      &mkp LCLK       &mkp RCLK        &mkp RCLK      &mkp LCLK       &mkp MCLK
+&trans  &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LG(LS(Z))    &kp LG(LS(Z))  &kp LG(V)  &kp LG(C)          &kp LG(X)  &kp LG(Z)  &trans
+&trans  &kp LGUI   &kp LALT   &kp LCTRL  &kp LSHFT  &none            &none          &kp LSHFT  &kp RIGHT_CONTROL  &kp RALT   &kp LGUI   &trans
+&trans  &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LG(LS(Z))    &kp LG(LS(Z))  &kp LG(V)  &kp LG(C)          &kp LG(X)  &kp LG(Z)  &trans
+                              &mkp MCLK  &mkp LCLK  &mkp RCLK        &mkp RCLK      &mkp LCLK  &mkp MCLK
             >;
 
-            label = "Button";
-            display-name = "Button";
+            label = "Clicks";
+            display-name = "Clicks";
         };
 
-        media_layer {
+        system_layer {
+            // Hold Escape, then Q for Mac or W for Omarchy.
             bindings = <
-&trans  &none                 &none         &none      &none           &none    &none              &none           &none              &none            &none       &trans
-&trans  &kp LGUI              &kp LEFT_ALT  &kp LCTRL  &kp LEFT_SHIFT  &none    &ext_power EP_TOG  &kp C_PREVIOUS  &kp C_VOLUME_DOWN  &kp C_VOLUME_UP  &kp C_NEXT  &trans
-&trans  &kp LS(LA(LC(LGUI)))  &none         &none      &none           &none    &out OUT_TOG       &bt BT_SEL 0    &bt BT_SEL 1       &bt BT_SEL 2     &bt BT_CLR  &trans
-                                            &none      &none           &none    &kp C_PLAY_PAUSE   &kp C_NEXT      &kp K_MUTE
+&trans  &to 0                 &to 1         &kp LC(UP)  &kp LG(LS(N3))  &kp LG(LS(N5))    &none              &none           &none              &none            &none       &trans
+&trans  &kp LGUI              &kp LEFT_ALT  &kp LCTRL   &kp LEFT_SHIFT  &none             &ext_power EP_TOG  &kp C_PREVIOUS  &kp C_VOLUME_DOWN  &kp C_VOLUME_UP  &kp C_NEXT  &trans
+&trans  &kp LS(LA(LC(LGUI)))  &none         &none       &none           &none             &out OUT_TOG       &bt BT_SEL 0    &bt BT_SEL 1       &bt BT_SEL 2     &bt BT_CLR  &trans
+                                            &none       &none           &none             &kp C_PLAY_PAUSE   &kp C_NEXT      &kp K_MUTE
             >;
 
-            label = "Media";
-            display-name = "Media";
+            label = "System";
+            display-name = "System";
         };
 
-        num_layer {
+        numbers_layer {
             bindings = <
 &trans  &kp LBKT   &kp N7  &kp N8  &kp N9  &kp RIGHT_BRACKET    &none  &none            &none      &none          &none                 &trans
 &trans  &kp SEMI   &kp N4  &kp N5  &kp N6  &kp EQUAL            &none  &kp RIGHT_SHIFT  &kp RCTRL  &kp RIGHT_ALT  &kp LGUI              &trans
@@ -140,11 +161,11 @@
                            &kp DOT  &kp N0  &kp MINUS            &none  &none            &none
             >;
 
-            label = "Num";
-            display-name = "Num";
+            label = "Numbers";
+            display-name = "Numbers";
         };
 
-        sym_layer {
+        symbols_layer {
             bindings = <
 &trans  &kp LEFT_BRACE  &kp AMPERSAND    &kp KP_MULTIPLY  &kp LEFT_PARENTHESIS  &kp RIGHT_BRACE    &none  &none            &none      &none          &none                 &trans
 &trans  &kp COLON       &kp DOLLAR       &kp PERCENT      &kp CARET             &kp PLUS           &none  &kp RIGHT_SHIFT  &kp RCTRL  &kp RIGHT_ALT  &kp LGUI              &trans
@@ -152,11 +173,11 @@
                                          &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp UNDERSCORE     &none  &none            &none
             >;
 
-            label = "Sym";
-            display-name = "Sym";
+            label = "Symbols";
+            display-name = "Symbols";
         };
 
-        fun_layer {
+        fkeys_layer {
             bindings = <
 &trans  &kp F12  &kp F7  &kp F8  &kp F9  &kp SYSREQ         &none  &none            &none      &none          &none                 &trans
 &trans  &kp F11  &kp F4  &kp F5  &kp F6  &kp SCROLLLOCK     &none  &kp RIGHT_SHIFT  &kp RCTRL  &kp RIGHT_ALT  &kp LGUI              &trans
@@ -164,8 +185,56 @@
                          &kp C_MENU  &kp SPACE  &kp TAB            &none  &none            &none
             >;
 
-            label = "Fun";
-            display-name = "Fun";
+            label = "F-keys";
+            display-name = "F-keys";
+        };
+
+        omarchy_navigate_layer {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans    &kp LC(LS(Z))  &kp LG(V)  &kp LG(C)  &kp LG(X)  &kp LC(Z)  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans         &trans     &trans     &trans     &trans     &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans         &trans     &trans     &trans     &trans     &trans
+                        &trans  &trans  &trans    &trans         &trans     &trans
+            >;
+
+            label = "Omarchy Navigate";
+            display-name = "Navigate";
+        };
+
+        omarchy_mouse_layer {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans    &kp LC(LS(Z))  &kp LG(V)  &kp LG(C)  &kp LG(X)  &kp LC(Z)  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans         &trans     &trans     &trans     &trans     &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans         &trans     &trans     &trans     &trans     &trans
+                        &trans  &trans  &trans    &trans         &trans     &trans
+            >;
+
+            label = "Omarchy Mouse";
+            display-name = "Mouse";
+        };
+
+        omarchy_clicks_layer {
+            bindings = <
+&trans  &kp LC(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LC(LS(Z))    &kp LC(LS(Z))  &kp LG(V)  &kp LG(C)  &kp LG(X)  &kp LC(Z)  &trans
+&trans  &trans     &trans     &trans     &trans     &trans           &trans         &trans     &trans     &trans     &trans     &trans
+&trans  &kp LC(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LC(LS(Z))    &kp LC(LS(Z))  &kp LG(V)  &kp LG(C)  &kp LG(X)  &kp LC(Z)  &trans
+                              &trans     &trans     &trans           &trans         &trans     &trans
+            >;
+
+            label = "Omarchy Clicks";
+            display-name = "Clicks";
+        };
+
+        omarchy_system_layer {
+            bindings = <
+&trans  &trans  &trans  &kp LG(SPACE)  &kp LA(PSCRN)  &kp LG(LC(PSCRN))    &kp LG(ENTER)  &kp LG(LS(ENTER))  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans         &trans         &trans               &trans         &trans             &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans         &trans         &trans               &trans         &trans             &trans  &trans  &trans  &trans
+                        &trans         &trans         &trans               &trans         &trans             &trans
+            >;
+
+            label = "Omarchy System";
+            display-name = "System";
         };
     };
 };
