@@ -12,39 +12,17 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'output/pdf/corne-cheatsheet.pdf'
 MD = ROOT / 'CHEATSHEET.md'
 SOURCE = (ROOT / 'config/corne.keymap').read_text()
-BASE = [['Q','W','F','P','B','J','L','U','Y',"'"],
-        ['A','R','S','T','G','M','N','E','I','O'],
-        ['Z','X','C','D','V','K','H',',','.','/']]
 HYPER = [('A','ChatGPT'),('C','Claude'),('E','VS Code'),('L','Linear'),
          ('T','Ghostty'),('W','cmux workspaces'),('B','Helium browser'),
          ('V','Clipboard history'),('P','Bitwarden'),('M','IINA'),
          ('O','Omarchy menu'),('K','Shortcut guide')]
-LAYERS = [
- ('Navigate', 'Hold Space', [
-   ['Mission','Prev desk','Next desk','-','-','Redo','Paste','Copy','Cut','Undo'],
-   ['Cmd','Alt','Ctrl','Shift','-','Caps*','Left','Down','Up','Right'],
-   ['Hyper','-','-','-','-','Insert','Browser home','Page down','Page up','End']],
-   'Right thumbs: Enter / Backspace / Delete. Linux: W/F = previous/next workspace; Q inactive.'),
- ('Mouse', 'Hold Tab', [
-   ['-','-','-','-','-','Redo','Paste','Copy','Cut','Undo'],
-   ['Cmd','Alt','Ctrl','Shift','-','-','Move left','Move down','Move up','Move right'],
-   ['Hyper','-','-','-','-','-','Scroll left','Scroll down','Scroll up','Scroll right']],
-   'Right thumbs: Right click / Left click / Middle click.'),
- ('Numbers', 'Hold Backspace', [
-   ['[','7','8','9',']','-','-','-','-','-'],
-   [';','4','5','6','=','-','Shift','Ctrl','Alt','Cmd'],
-   ['`','1','2','3','\\','-','-','-','-','Hyper']],
-   'Left thumbs: . / 0 / -'),
- ('Symbols', 'Hold Enter', [
-   ['{','&','*','(','}','-','-','-','-','-'],
-   [':','$','%','^','+','-','Shift','Ctrl','Alt','Cmd'],
-   ['~','!','@','#','|','-','-','-','-','Hyper']],
-   'Left thumbs: ( / ) / _'),
- ('F-keys', 'Hold Delete', [
-   ['F12','F7','F8','F9','SysRq','-','-','-','-','-'],
-   ['F11','F4','F5','F6','Scroll lock','-','Shift','Ctrl','Alt','Cmd'],
-   ['F10','F1','F2','F3','Pause','-','-','-','-','Hyper']],
-   'Left thumbs: Context menu / Space / Tab.'),
+LAYER_SPECS = [
+ ('Navigate', 'Hold Space',
+  'Right thumbs: Enter / Backspace / Delete. Linux: W/F = previous/next workspace; Q inactive.'),
+ ('Mouse', 'Hold Tab', 'Right thumbs: Right click / Left click / Middle click.'),
+ ('Numbers', 'Hold Backspace', 'Left thumbs: . / 0 / -'),
+ ('Symbols', 'Hold Enter', 'Left thumbs: ( / ) / _'),
+ ('F-keys', 'Hold Delete', 'Left thumbs: Context menu / Space / Tab.'),
 ]
 THUMBS = [('Escape','System'),('Space','Navigate'),('Tab','Mouse'),
           ('Enter','Symbols'),('Backspace','Numbers'),('Delete','F-keys')]
@@ -61,7 +39,7 @@ parsed = {}
 for m in re.finditer(r'(\w+)_layer\s*\{\s*(?://[^\n]*\n\s*)?bindings\s*=\s*<([\s\S]*?)>;', SOURCE):
     parsed[m[1]] = [' '.join(x.split()) for x in re.findall(r'&\w+(?:\s+[^&]+)?',m[2])]
 assert len(parsed) == 13 and all(len(v) == 42 for v in parsed.values())
-assert parsed['mac'][0] == '&kp LG(GRAVE)' and parsed['omarchy'][0] == '&kp LG(GRAVE)'
+assert parsed['mac'][0] == '&kp LG(GRAVE)' and parsed['omarchy'][0] == '&trans'
 assert parsed['mac'][24] == '&launcher LS(LA(LC(LGUI))) LG(SPACE)'
 assert parsed['omarchy'][24] == '&launcher LGUI LG(SPACE)'
 assert parsed['mac'][11] == '&lt 4 LG(LS(N5))'
@@ -70,19 +48,21 @@ assert parsed['mac'][35] == '&hyper LS(LA(LC(LGUI))) LS(LA(LC(LGUI)))'
 assert parsed['omarchy'][35] == '&hyper LGUI LGUI'
 assert parsed['system'][9] == '&kp LG(LS(N4))' and parsed['omarchy_system'][9] == '&kp PSCRN'
 assert parsed['mac'][25] == '&kp Z' and parsed['mac'][34] == '&kp SLASH'
-assert parsed['mac'][12] == parsed['omarchy'][12] == '&caps_word'
+assert parsed['mac'][12] == '&caps_word' and parsed['omarchy'][12] == '&trans'
 assert parsed['mac'][23] == '&kp LS(LA(LC(LG(V))))'
 assert parsed['omarchy'][23] == '&kp LG(LC(V))'
+assert all('&kp LS(LA(LC(LGUI)))' not in keys for keys in parsed.values())
+assert parsed['navigate'][18] == '&kp ESC' and parsed['navigate'][31] == '&kp HOME'
 
 # Read each layer's printable actions from its real bindings. Base labels are
 # only location hints; the grid must follow source edits, not a copied diagram.
 KEY_LABELS = {
     'LC(UP)':'Mission', 'LC(LEFT)':'Prev desk', 'LC(RIGHT)':'Next desk',
     'LG(LS(Z))':'Redo', 'LG(V)':'Paste', 'LG(C)':'Copy', 'LG(X)':'Cut', 'LG(Z)':'Undo',
-    'LGUI':'Cmd', 'LEFT_ALT':'Alt', 'LCTRL':'Ctrl', 'LEFT_SHIFT':'Shift',
-    'RIGHT_SHIFT':'Shift', 'RCTRL':'Ctrl', 'RIGHT_ALT':'Alt',
-    'LS(LA(LC(LGUI)))':'Hyper', 'CAPSLOCK':'Caps*', 'LEFT':'Left', 'DOWN':'Down',
-    'UP':'Up', 'RIGHT':'Right', 'INSERT':'Insert', 'C_AC_HOME':'Browser home',
+    'LGUI':'Cmd', 'LALT':'Alt', 'LCTRL':'Ctrl', 'LSHFT':'Shift',
+    'RSHFT':'Shift', 'RCTRL':'Ctrl', 'RALT':'Alt',
+    'ESC':'Escape', 'HOME':'Home', 'LEFT':'Left', 'DOWN':'Down',
+    'UP':'Up', 'RIGHT':'Right', 'INSERT':'Insert',
     'PAGE_DOWN':'Page down', 'PAGE_UP':'Page up', 'END':'End',
     'LBKT':'[', 'RIGHT_BRACKET':']', 'SEMI':';', 'EQUAL':'=', 'GRAVE':'`',
     'BACKSLASH':'\\', 'LEFT_BRACE':'{', 'AMPERSAND':'&', 'KP_MULTIPLY':'*',
@@ -103,9 +83,12 @@ def action_label(binding):
     raise ValueError('Add a printable label for '+binding)
 core=[[1,2,3,4,5,6,7,8,9,10], [13,14,15,16,17,18,19,20,21,22],
       [25,26,27,28,29,30,31,32,33,34]]
+BASE_NAMES = {'APOS': "'", 'COMMA': ',', 'DOT': '.', 'SLASH': '/'}
+BASE = [[BASE_NAMES.get(parsed['mac'][i].split()[-1], parsed['mac'][i].split()[-1])
+         for i in row] for row in core]
 LAYERS=[(name,hold,[[action_label(parsed[{'F-keys':'fkeys'}.get(name,name.lower())][i])
                       for i in row] for row in core],note)
-        for name,hold,_old_rows,note in LAYERS]
+        for name,hold,note in LAYER_SPECS]
 OUT.parent.mkdir(parents=True,exist_ok=True)
 
 fontdir = Path('/System/Library/Fonts/Supplemental')
@@ -237,7 +220,7 @@ for title,hold,rows,note in LAYERS:
 text(40,76,'CLICKS',8,True,TEAL)
 text(102,76,'Hold outer top-right. Left thumbs: Middle / Left / Right click.',7.5)
 text(102,64,'Right thumbs: Right / Left / Middle click. Clipboard shortcuts on both hands.',7.5)
-text(40,48,'* Mac hidutil maps Caps Lock to Escape. Navigate H sends Browser Home, not a document Home key.',7,color=MUTED)
+text(40,48,'Hyper is on the two bottom outer keys. Empty inner positions are disabled. Navigate M = Escape; H = Home.',7,color=MUTED)
 text(40,37,'System: N/E/I = previous track / volume down / volume up; H/,/. = Bluetooth profiles 1/2/3; / clears current pairing.',6.8,color=MUTED)
 C.save()
 
@@ -254,7 +237,7 @@ md += ['', 'Mac quick terminal: **Command + backtick (`)**. Linux scratchpad: **
        '', '## Caps Word', '', 'Tap the left-middle outer key for uppercase words and identifiers such as `MY_VARIABLE`. Letters, digits, underscores, Backspace and Delete continue it. A space or another separator ends it; tap Caps Word again to turn it off. This is word-by-word capitalization, not a persistent Caps Lock. Browser access remains on Hyper+B (Mac) or System + L.', '', '## Thumb layers','', '| Tap key; hold for | Layer |','| --- | --- |']
 md += [f'| {a} | {b} |' for a,b in THUMBS]
 md += ['| Outer top-right | Clicks |','', '## Hyper - Mac','',
-       '**Hyper = left Control + Option/Alt + Shift + Command.** Both bottom outer keys provide it. Z and / type normally.','', '| Hyper + | Opens |','| --- | --- |']
+       '**Hyper = left Control + Option/Alt + Shift + Command.** Both bottom outer keys provide it. Z and / type normally. Extra Hyper modifier keys inside utility layers have been removed; their old positions are disabled.','', '| Hyper + | Opens |','| --- | --- |']
 md += [f'| {a} | {b} |' for a,b in HYPER]
 md += ['', '## System - hold Escape','', '| Base letter | Mac | Omarchy |','| --- | --- | --- |']
 md += ['| '+' | '.join(r)+' |' for r in SYSTEM]
@@ -268,7 +251,7 @@ for title,hold,rows,note in LAYERS:
     md += [' '.join(f'{k:^12}' for k in row[:5])+'  |  '+' '.join(f'{k:^12}' for k in row[5:]) for row in rows]
     md += ['```', '',note]
 md += ['', 'Navigate/Mouse clipboard row, right side: **J redo, L paste, U copy, Y cut, apostrophe undo**. Mac uses Command; Omarchy uses its universal Super copy/paste/cut and Control undo/redo.',
-       '', '**Caps (asterisk)** sends Caps Lock; your Mac remaps it to Escape. **Browser home** sends the consumer Browser Home action, not a document Home key.',
+       '', '**Navigate M = Escape; H = Home.** Home now sends the normal keyboard Home key. Outer utility keys pass through on every layer. Empty inner positions are disabled, so they do not fall back to typing letters.',
        '', '## Clicks - hold outer top-right','',
        '- Left thumbs: middle / left / right mouse button.',
        '- Right thumbs: right / left / middle mouse button.',
@@ -285,6 +268,6 @@ md += ['', 'Navigate/Mouse clipboard row, right side: **J redo, L paste, U copy,
        '', '## Optional next features (not enabled)', '', '- [Key Repeat](https://zmk.dev/docs/keymaps/behaviors/key-repeat): send the last key again.', '- [Sticky layers](https://zmk.dev/docs/keymaps/behaviors/sticky-layer): tap once for one symbol or number, then return to typing.', '', '## Source and refresh','',
        'Reference: `config/corne.keymap` and the Mac Raycast assignments documented in `README.md`. Native Omarchy shortcuts require its standard bindings. The Numbers/Symbols/F-keys grids share the same placement on both hosts.',
        '', 'PDF: [Printable cheat sheet](output/pdf/corne-cheatsheet.pdf). Rebuild with `python3 tools/generate_cheatsheet.py` in an environment with ReportLab installed.']
-MD.write_text('\n'.join(md)+'\n')
+MD.write_text('\n'.join(line.rstrip() for line in md)+'\n')
 print(OUT)
 print(MD)

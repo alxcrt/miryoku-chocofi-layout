@@ -6,8 +6,6 @@ and optional nice!view displays. The `dongle`
 branch supports a **Prospector USB dongle (XIAO BLE)** and standalone use with
 only the two keyboard halves.
 
-![Miryoku Chocofi base layout](assets/layout.png)
-
 [Cheat sheet](CHEATSHEET.md) · [Printable two-page PDF](output/pdf/corne-cheatsheet.pdf)
 
 ## Firmware and flashing
@@ -82,13 +80,12 @@ release, then press a shortcut letter within 1.5 seconds for one-shot
 Hyper/Super; hold it with another key for an ordinary modifier chord. The
 one-shot is lazy (no host modifier before the target key), releases on the
 target key press, and keeps `ignore-modifiers` enabled for the combined Hyper
-modifier. It does not lock on. Direct layer Hyper keys remain ordinary held
-modifiers. The top right capture key uses the default 200 ms layer-tap.
-The image above illustrates the typing core; this table describes its six
-additional utility keys.
+modifier. It does not lock on. The two bottom outer keys supply Hyper on every
+layer. The top right capture key uses the default 200 ms layer-tap.
+The cheat sheet shows the current 42-key layout.
 
-`Z` and `/` are ordinary keys. Both bottom outer Hyper keys and the direct layer
-Hyper bindings send **left Ctrl + Alt/Option + Shift + GUI/Command**:
+`Z` and `/` are ordinary keys. Both bottom outer Hyper keys send
+**left Ctrl + Alt/Option + Shift + GUI/Command**:
 `LS(LA(LC(LGUI)))`. The active local Omarchy Mac `hidutil` mapping changes
 right Command to left Option (`~/omarchy-mac/local/bin/mac-keyremap`), which
 can remove Command from an all-right Hyper chord. Left Command avoids it.
@@ -133,6 +130,17 @@ bindings; Omarchy handles terminal copy/paste as `Ctrl+Shift+C/V`. Undo/redo
 use `Ctrl+Z` / `Ctrl+Shift+Z` in Omarchy and `Command+Z` / `Command+Shift+Z`
 on the Mac. The appropriate editing overlay follows the selected mode and
 held layer automatically.
+
+Hyper modifiers live only on the two bottom outer utility keys. Their old
+extra positions in Navigate, Mouse, System, Numbers, Symbols and F-keys are
+disabled (`&none`), so they do not fall through to typing letters. Outer utility
+keys pass through (`&trans`) across all layers. Navigate **M** sends Escape and
+**H** sends the normal keyboard Home key. These replace the former Caps Lock
+(remapped to Escape on this Mac) and Browser Home entries.
+
+Linux base mode inherits shared outer keys. Its conditional overlays keep
+explicit clipboard shortcuts so chording multiple layers preserves their
+priority. All individual modifier bindings use consistent ZMK aliases.
 
 The System layer adds these shortcuts, using the letters printed by Base:
 
@@ -215,8 +223,8 @@ branch refs and the build container are not a complete dependency lock.
 
 ## Remaining hardware checks and layout decisions
 
-- Test the same Raycast shortcut with both outer Hyper keys and direct
-  layer Hyper keys. Modifier sides match; recognition on the Mac needs testing.
+- Test the same Raycast shortcut with both bottom outer Hyper keys. Modifier
+  sides match; recognition on the Mac needs testing.
 - Test ordinary `z` and `/`, home-row rolls, Hyper chords, host switching,
   automatic editing layers, one-shot Hyper timeout and fast letter rolls,
   capture-menu tap versus Clicks hold, wake/reconnect,

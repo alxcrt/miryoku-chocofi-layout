@@ -63,7 +63,7 @@
             quick-tap-ms = <0>;
         };
 
-        hml: homewrow_mods_left {
+        hml: home_row_mods_left {
             compatible = "zmk,behavior-hold-tap";
             label = "HOMEROW_MODS_LEFT_HAND";
             bindings = <&kp>, <&kp>;
@@ -78,7 +78,7 @@
             require-prior-idle-ms = <150>;
         };
 
-        hmr: homewrow_mods_right {
+        hmr: home_row_mods_right {
             compatible = "zmk,behavior-hold-tap";
             label = "HOMEROW_MODS_RIGHT_HAND";
             bindings = <&kp>, <&kp>;
@@ -94,7 +94,8 @@
         };
     };
 
-    // Host mode selects editing shortcuts automatically when a shared layer is held.
+    // Host mode selects the corresponding overlay when a shared layer is held.
+    // Explicit Linux clipboard bindings preserve priority when layers are chorded.
     conditional_layers {
         compatible = "zmk,conditional-layers";
         omarchy_navigate { if-layers = <1 2>; then-layer = <9>; };
@@ -109,10 +110,10 @@
         mac_layer {
             // Right top: capture/Clicks. Right bottom: one-shot Hyper / held Hyper.
             bindings = <
-&kp LG(GRAVE)                         &kp Q        &kp W            &kp F         &kp P              &kp B  &kp J  &kp L               &kp U         &kp Y        &kp APOS     &lt 4 LG(LS(N5))
-&caps_word                            &hml LGUI A  &hml LEFT_ALT R  &hml LCTRL S  &hml LEFT_SHIFT T  &kp G  &kp M  &hmr RIGHT_SHIFT N  &hmr RCTRL E  &hmr LALT I  &hmr LGUI O  &kp LS(LA(LC(LG(V))))
-&launcher LS(LA(LC(LGUI))) LG(SPACE)  &kp Z        &kp X            &kp C         &kp D              &kp V  &kp K  &kp H               &kp COMMA     &kp DOT      &kp SLASH    &hyper LS(LA(LC(LGUI))) LS(LA(LC(LGUI)))
-                                                    &lt 5 ESC     &lt 2 SPACE        &lt 3 TAB    &lt 7 ENTER  &lt 6 BACKSPACE     &lt 8 DELETE
+&kp LG(GRAVE)                         &kp Q        &kp W        &kp F         &kp P         &kp B    &kp J  &kp L         &kp U         &kp Y        &kp APOS     &lt 4 LG(LS(N5))
+&caps_word                            &hml LGUI A  &hml LALT R  &hml LCTRL S  &hml LSHFT T  &kp G    &kp M  &hmr RSHFT N  &hmr RCTRL E  &hmr LALT I  &hmr LGUI O  &kp LS(LA(LC(LG(V))))
+&launcher LS(LA(LC(LGUI))) LG(SPACE)  &kp Z        &kp X        &kp C         &kp D         &kp V    &kp K  &kp H         &kp COMMA     &kp DOT      &kp SLASH    &hyper LS(LA(LC(LGUI))) LS(LA(LC(LGUI)))
+                                                              &lt 5 ESC   &lt 2 SPACE  &lt 3 TAB     &lt 7 ENTER  &lt 6 BACKSPACE  &lt 8 DELETE
             >;
 
             label = "Mac";
@@ -122,10 +123,10 @@
         omarchy_layer {
             // Same positions: scratchpad/capture, Caps Word/clipboard, menu/Super.
             bindings = <
-&kp LG(GRAVE)             &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &lt 4 LG(LC(C))
-&caps_word                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp LG(LC(V))
-&launcher LGUI LG(SPACE)  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &hyper LGUI LGUI
-                                 &trans  &trans  &trans    &trans  &trans  &trans
+&trans                    &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &lt 4 LG(LC(C))
+&trans                    &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &kp LG(LC(V))
+&launcher LGUI LG(SPACE)  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &hyper LGUI LGUI
+                              &trans      &trans      &trans        &trans      &trans      &trans
             >;
 
             label = "Omarchy";
@@ -134,10 +135,10 @@
 
         navigate_layer {
             bindings = <
-&trans  &kp LC(UP)            &kp LC(LEFT)  &kp LC(RIGHT)  &none        &none    &kp LG(LS(Z))  &kp LG(V)      &kp LG(C)      &kp LG(X)    &kp LG(Z)  &trans
-&trans  &kp LGUI              &kp LEFT_ALT  &kp LCTRL  &kp LEFT_SHIFT  &none    &kp CAPSLOCK   &kp LEFT       &kp DOWN       &kp UP       &kp RIGHT  &trans
-&trans  &kp LS(LA(LC(LGUI)))  &none         &none      &none           &none    &kp INSERT     &kp C_AC_HOME  &kp PAGE_DOWN  &kp PAGE_UP  &kp END    &trans
-                                            &none      &none           &none    &kp ENTER      &kp BACKSPACE  &kp DELETE
+&trans  &kp LC(UP)  &kp LC(LEFT)  &kp LC(RIGHT)  &none      &none    &kp LG(LS(Z))  &kp LG(V)  &kp LG(C)      &kp LG(X)    &kp LG(Z)  &trans
+&trans  &kp LGUI    &kp LALT      &kp LCTRL      &kp LSHFT  &none    &kp ESC        &kp LEFT   &kp DOWN       &kp UP       &kp RIGHT  &trans
+&trans  &none       &none         &none          &none      &none    &kp INSERT     &kp HOME   &kp PAGE_DOWN  &kp PAGE_UP  &kp END    &trans
+                               &none       &none       &none         &kp ENTER   &kp BACKSPACE  &kp DELETE
             >;
 
             label = "Navigate";
@@ -146,10 +147,10 @@
 
         mouse_layer {
             bindings = <
-&trans  &none                 &none         &none      &none           &none    &kp LG(LS(Z))  &kp LG(V)       &kp LG(C)       &kp LG(X)     &kp LG(Z)        &trans
-&trans  &kp LGUI              &kp LEFT_ALT  &kp LCTRL  &kp LEFT_SHIFT  &none    &none          &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT  &trans
-&trans  &kp LS(LA(LC(LGUI)))  &none         &none      &none           &none    &none          &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &trans
-                                            &none      &none           &none    &mkp RCLK      &mkp LCLK       &mkp MCLK
+&trans  &none     &none     &none      &none      &none    &kp LG(LS(Z))  &kp LG(V)       &kp LG(C)       &kp LG(X)     &kp LG(Z)        &trans
+&trans  &kp LGUI  &kp LALT  &kp LCTRL  &kp LSHFT  &none    &none          &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT  &trans
+&trans  &none     &none     &none      &none      &none    &none          &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &trans
+                     &none       &none       &none         &mkp RCLK   &mkp LCLK   &mkp MCLK
             >;
 
             label = "Mouse";
@@ -158,10 +159,10 @@
 
         clicks_layer {
             bindings = <
-&trans  &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LG(LS(Z))    &kp LG(LS(Z))  &kp LG(V)  &kp LG(C)          &kp LG(X)  &kp LG(Z)  &trans
-&trans  &kp LGUI   &kp LALT   &kp LCTRL  &kp LSHFT  &none            &none          &kp LSHFT  &kp RIGHT_CONTROL  &kp RALT   &kp LGUI   &trans
-&trans  &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LG(LS(Z))    &kp LG(LS(Z))  &kp LG(V)  &kp LG(C)          &kp LG(X)  &kp LG(Z)  &trans
-                              &mkp MCLK  &mkp LCLK  &mkp RCLK        &mkp RCLK      &mkp LCLK  &mkp MCLK
+&trans  &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LG(LS(Z))    &kp LG(LS(Z))  &kp LG(V)  &kp LG(C)  &kp LG(X)  &kp LG(Z)  &trans
+&trans  &kp LGUI   &kp LALT   &kp LCTRL  &kp LSHFT  &none            &none          &kp LSHFT  &kp RCTRL  &kp RALT   &kp LGUI   &trans
+&trans  &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LG(LS(Z))    &kp LG(LS(Z))  &kp LG(V)  &kp LG(C)  &kp LG(X)  &kp LG(Z)  &trans
+                               &mkp MCLK   &mkp LCLK   &mkp RCLK     &mkp RCLK   &mkp LCLK   &mkp MCLK
             >;
 
             label = "Clicks";
@@ -171,10 +172,10 @@
         system_layer {
             // Hold Escape, then Q for Mac or W for Omarchy.
             bindings = <
-&trans  &to 0                 &to 1         &kp LS(LA(LC(LG(O))))  &kp LG(LS(N3))  &kp LG(LS(N5))    &kp LS(LA(LC(LG(T))))  &kp LS(LA(LC(LG(B))))  &kp LS(LA(LC(LG(K))))  &kp LG(LS(N4))  &none  &trans
-&trans  &kp LGUI              &kp LEFT_ALT  &kp LCTRL   &kp LEFT_SHIFT  &none             &ext_power EP_TOG  &kp C_PREVIOUS  &kp C_VOLUME_DOWN  &kp C_VOLUME_UP  &kp C_NEXT  &trans
-&trans  &kp LS(LA(LC(LGUI)))  &none         &none       &none           &none             &out OUT_TOG       &bt BT_SEL 0    &bt BT_SEL 1       &bt BT_SEL 2     &bt BT_CLR  &trans
-                                            &none       &none           &none             &kp C_PLAY_PAUSE   &kp C_NEXT      &kp K_MUTE
+&trans  &to 0     &to 1     &kp LS(LA(LC(LG(O))))  &kp LG(LS(N3))  &kp LG(LS(N5))    &kp LS(LA(LC(LG(T))))  &kp LS(LA(LC(LG(B))))  &kp LS(LA(LC(LG(K))))  &kp LG(LS(N4))   &none       &trans
+&trans  &kp LGUI  &kp LALT  &kp LCTRL              &kp LSHFT       &none             &ext_power EP_TOG      &kp C_PREVIOUS         &kp C_VOLUME_DOWN      &kp C_VOLUME_UP  &kp C_NEXT  &trans
+&trans  &none     &none     &none                  &none           &none             &out OUT_TOG           &bt BT_SEL 0           &bt BT_SEL 1           &bt BT_SEL 2     &bt BT_CLR  &trans
+                                               &none       &none       &none         &kp C_PLAY_PAUSE  &kp C_NEXT  &kp K_MUTE
             >;
 
             label = "System";
@@ -183,10 +184,10 @@
 
         numbers_layer {
             bindings = <
-&trans  &kp LBKT   &kp N7  &kp N8  &kp N9  &kp RIGHT_BRACKET    &none  &none            &none      &none          &none                 &trans
-&trans  &kp SEMI   &kp N4  &kp N5  &kp N6  &kp EQUAL            &none  &kp RIGHT_SHIFT  &kp RCTRL  &kp RIGHT_ALT  &kp LGUI              &trans
-&trans  &kp GRAVE  &kp N1  &kp N2  &kp N3  &kp BACKSLASH        &none  &none            &none      &none          &kp LS(LA(LC(LGUI)))  &trans
-                           &kp DOT  &kp N0  &kp MINUS            &none  &none            &none
+&trans  &kp LBKT   &kp N7  &kp N8  &kp N9  &kp RIGHT_BRACKET    &none  &none      &none      &none     &none     &trans
+&trans  &kp SEMI   &kp N4  &kp N5  &kp N6  &kp EQUAL            &none  &kp RSHFT  &kp RCTRL  &kp RALT  &kp LGUI  &trans
+&trans  &kp GRAVE  &kp N1  &kp N2  &kp N3  &kp BACKSLASH        &none  &none      &none      &none     &none     &trans
+                          &kp DOT     &kp N0      &kp MINUS     &none       &none       &none
             >;
 
             label = "Numbers";
@@ -195,10 +196,10 @@
 
         symbols_layer {
             bindings = <
-&trans  &kp LEFT_BRACE  &kp AMPERSAND    &kp KP_MULTIPLY  &kp LEFT_PARENTHESIS  &kp RIGHT_BRACE    &none  &none            &none      &none          &none                 &trans
-&trans  &kp COLON       &kp DOLLAR       &kp PERCENT      &kp CARET             &kp PLUS           &none  &kp RIGHT_SHIFT  &kp RCTRL  &kp RIGHT_ALT  &kp LGUI              &trans
-&trans  &kp TILDE       &kp EXCLAMATION  &kp AT_SIGN      &kp HASH              &kp PIPE           &none  &none            &none      &none          &kp LS(LA(LC(LGUI)))  &trans
-                                         &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp UNDERSCORE     &none  &none            &none
+&trans  &kp LEFT_BRACE  &kp AMPERSAND    &kp KP_MULTIPLY  &kp LEFT_PARENTHESIS  &kp RIGHT_BRACE    &none  &none      &none      &none     &none     &trans
+&trans  &kp COLON       &kp DOLLAR       &kp PERCENT      &kp CARET             &kp PLUS           &none  &kp RSHFT  &kp RCTRL  &kp RALT  &kp LGUI  &trans
+&trans  &kp TILDE       &kp EXCLAMATION  &kp AT_SIGN      &kp HASH              &kp PIPE           &none  &none      &none      &none     &none     &trans
+                                    &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp UNDERSCORE    &none       &none       &none
             >;
 
             label = "Symbols";
@@ -207,10 +208,10 @@
 
         fkeys_layer {
             bindings = <
-&trans  &kp F12  &kp F7  &kp F8  &kp F9  &kp SYSREQ         &none  &none            &none      &none          &none                 &trans
-&trans  &kp F11  &kp F4  &kp F5  &kp F6  &kp SCROLLLOCK     &none  &kp RIGHT_SHIFT  &kp RCTRL  &kp RIGHT_ALT  &kp LGUI              &trans
-&trans  &kp F10  &kp F1  &kp F2  &kp F3  &kp PAUSE_BREAK    &none  &none            &none      &none          &kp LS(LA(LC(LGUI)))  &trans
-                         &kp C_MENU  &kp SPACE  &kp TAB            &none  &none            &none
+&trans  &kp F12  &kp F7  &kp F8  &kp F9  &kp SYSREQ         &none  &none      &none      &none     &none     &trans
+&trans  &kp F11  &kp F4  &kp F5  &kp F6  &kp SCROLLLOCK     &none  &kp RSHFT  &kp RCTRL  &kp RALT  &kp LGUI  &trans
+&trans  &kp F10  &kp F1  &kp F2  &kp F3  &kp PAUSE_BREAK    &none  &none      &none      &none     &none     &trans
+                      &kp C_MENU  &kp SPACE   &kp TAB       &none       &none       &none
             >;
 
             label = "F-keys";
@@ -219,10 +220,10 @@
 
         omarchy_navigate_layer {
             bindings = <
-&trans  &none  &kp LG(LS(TAB))  &kp LG(TAB)  &trans  &trans    &kp LC(LS(Z))  &kp LG(V)  &kp LG(C)  &kp LG(X)  &kp LC(Z)  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans         &trans     &trans     &trans     &trans     &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans         &trans     &trans     &trans     &trans     &trans
-                        &trans  &trans  &trans    &trans         &trans     &trans
+&trans  &none   &kp LG(LS(TAB))  &kp LG(TAB)  &trans  &trans    &kp LC(LS(Z))  &kp LG(V)  &kp LG(C)  &kp LG(X)  &kp LC(Z)  &trans
+&trans  &trans  &trans           &trans       &trans  &trans    &trans         &trans     &trans     &trans     &trans     &trans
+&trans  &trans  &trans           &trans       &trans  &trans    &trans         &trans     &trans     &trans     &trans     &trans
+                          &trans      &trans      &trans        &trans      &trans      &trans
             >;
 
             label = "Omarchy Navigate";
@@ -234,7 +235,7 @@
 &trans  &trans  &trans  &trans  &trans  &trans    &kp LC(LS(Z))  &kp LG(V)  &kp LG(C)  &kp LG(X)  &kp LC(Z)  &trans
 &trans  &trans  &trans  &trans  &trans  &trans    &trans         &trans     &trans     &trans     &trans     &trans
 &trans  &trans  &trans  &trans  &trans  &trans    &trans         &trans     &trans     &trans     &trans     &trans
-                        &trans  &trans  &trans    &trans         &trans     &trans
+            &trans      &trans      &trans        &trans      &trans      &trans
             >;
 
             label = "Omarchy Mouse";
@@ -246,7 +247,7 @@
 &trans  &kp LC(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LC(LS(Z))    &kp LC(LS(Z))  &kp LG(V)  &kp LG(C)  &kp LG(X)  &kp LC(Z)  &trans
 &trans  &trans     &trans     &trans     &trans     &trans           &trans         &trans     &trans     &trans     &trans     &trans
 &trans  &kp LC(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LC(LS(Z))    &kp LC(LS(Z))  &kp LG(V)  &kp LG(C)  &kp LG(X)  &kp LC(Z)  &trans
-                              &trans     &trans     &trans           &trans         &trans     &trans
+                               &trans      &trans      &trans        &trans      &trans      &trans
             >;
 
             label = "Omarchy Clicks";
@@ -256,9 +257,9 @@
         omarchy_system_layer {
             bindings = <
 &trans  &trans  &trans  &kp LG(SPACE)  &kp LA(PSCRN)  &kp LG(LC(PSCRN))    &kp LG(ENTER)  &kp LG(LS(ENTER))  &kp LG(K)  &kp PSCRN  &trans  &trans
-&trans  &trans  &trans  &trans         &trans         &trans               &trans         &trans             &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans         &trans         &trans               &trans         &trans             &trans  &trans  &trans  &trans
-                        &trans         &trans         &trans               &trans         &trans             &trans
+&trans  &trans  &trans  &trans         &trans         &trans               &trans         &trans             &trans     &trans     &trans  &trans
+&trans  &trans  &trans  &trans         &trans         &trans               &trans         &trans             &trans     &trans     &trans  &trans
+                                     &trans      &trans      &trans        &trans      &trans      &trans
             >;
 
             label = "Omarchy System";

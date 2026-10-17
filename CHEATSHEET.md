@@ -34,7 +34,7 @@ Tap the left-middle outer key for uppercase words and identifiers such as `MY_VA
 
 ## Hyper - Mac
 
-**Hyper = left Control + Option/Alt + Shift + Command.** Both bottom outer keys provide it. Z and / type normally.
+**Hyper = left Control + Option/Alt + Shift + Command.** Both bottom outer keys provide it. Z and / type normally. Extra Hyper modifier keys inside utility layers have been removed; their old positions are disabled.
 
 | Hyper + | Opens |
 | --- | --- |
@@ -71,9 +71,9 @@ Hold **Space + Q** for Mission Control on Mac. Hold **Space + W / F** for previo
 Read each layer grid using these same positions. Outer utility keys are omitted.
 
 ```text
-     Q            W            F            P            B        |       J            L            U            Y            '      
-     A            R            S            T            G        |       M            N            E            I            O      
-     Z            X            C            D            V        |       K            H            ,            .            /      
+     Q            W            F            P            B        |       J            L            U            Y            '
+     A            R            S            T            G        |       M            N            E            I            O
+     Z            X            C            D            V        |       K            H            ,            .            /
 ```
 
 Home-row holds: **A/R/S/T = Cmd/Alt/Ctrl/Shift**; **N/E/I/O = Shift/Ctrl/Alt/Cmd**. On Linux, Cmd means Super.
@@ -83,9 +83,9 @@ Ordinary home-row modifiers retain 280 ms tapping term, 175 ms quick-tap and 150
 ## Navigate - Hold Space
 
 ```text
-  Mission     Prev desk    Next desk        -            -        |      Redo        Paste         Copy         Cut          Undo    
-    Cmd          Alt          Ctrl        Shift          -        |     Caps*         Left         Down          Up         Right    
-   Hyper          -            -            -            -        |     Insert    Browser home  Page down     Page up        End     
+  Mission     Prev desk    Next desk        -            -        |      Redo        Paste         Copy         Cut          Undo
+    Cmd          Alt          Ctrl        Shift          -        |     Escape        Left         Down          Up         Right
+     -            -            -            -            -        |     Insert        Home      Page down     Page up        End
 ```
 
 Right thumbs: Enter / Backspace / Delete. Linux: W/F = previous/next workspace; Q inactive.
@@ -93,9 +93,9 @@ Right thumbs: Enter / Backspace / Delete. Linux: W/F = previous/next workspace; 
 ## Mouse - Hold Tab
 
 ```text
-     -            -            -            -            -        |      Redo        Paste         Copy         Cut          Undo    
-    Cmd          Alt          Ctrl        Shift          -        |       -        Move left    Move down     Move up     Move right 
-   Hyper          -            -            -            -        |       -       Scroll left  Scroll down   Scroll up   Scroll right
+     -            -            -            -            -        |      Redo        Paste         Copy         Cut          Undo
+    Cmd          Alt          Ctrl        Shift          -        |       -        Move left    Move down     Move up     Move right
+     -            -            -            -            -        |       -       Scroll left  Scroll down   Scroll up   Scroll right
 ```
 
 Right thumbs: Right click / Left click / Middle click.
@@ -103,9 +103,9 @@ Right thumbs: Right click / Left click / Middle click.
 ## Numbers - Hold Backspace
 
 ```text
-     [            7            8            9            ]        |       -            -            -            -            -      
-     ;            4            5            6            =        |       -          Shift         Ctrl         Alt          Cmd     
-     `            1            2            3            \        |       -            -            -            -          Hyper    
+     [            7            8            9            ]        |       -            -            -            -            -
+     ;            4            5            6            =        |       -          Shift         Ctrl         Alt          Cmd
+     `            1            2            3            \        |       -            -            -            -            -
 ```
 
 Left thumbs: . / 0 / -
@@ -113,9 +113,9 @@ Left thumbs: . / 0 / -
 ## Symbols - Hold Enter
 
 ```text
-     {            &            *            (            }        |       -            -            -            -            -      
-     :            $            %            ^            +        |       -          Shift         Ctrl         Alt          Cmd     
-     ~            !            @            #            |        |       -            -            -            -          Hyper    
+     {            &            *            (            }        |       -            -            -            -            -
+     :            $            %            ^            +        |       -          Shift         Ctrl         Alt          Cmd
+     ~            !            @            #            |        |       -            -            -            -            -
 ```
 
 Left thumbs: ( / ) / _
@@ -123,16 +123,16 @@ Left thumbs: ( / ) / _
 ## F-keys - Hold Delete
 
 ```text
-    F12           F7           F8           F9         SysRq      |       -            -            -            -            -      
-    F11           F4           F5           F6      Scroll lock   |       -          Shift         Ctrl         Alt          Cmd     
-    F10           F1           F2           F3         Pause      |       -            -            -            -          Hyper    
+    F12           F7           F8           F9         SysRq      |       -            -            -            -            -
+    F11           F4           F5           F6      Scroll lock   |       -          Shift         Ctrl         Alt          Cmd
+    F10           F1           F2           F3         Pause      |       -            -            -            -            -
 ```
 
 Left thumbs: Context menu / Space / Tab.
 
 Navigate/Mouse clipboard row, right side: **J redo, L paste, U copy, Y cut, apostrophe undo**. Mac uses Command; Omarchy uses its universal Super copy/paste/cut and Control undo/redo.
 
-**Caps (asterisk)** sends Caps Lock; your Mac remaps it to Escape. **Browser home** sends the consumer Browser Home action, not a document Home key.
+**Navigate M = Escape; H = Home.** Home now sends the normal keyboard Home key. Outer utility keys pass through on every layer. Empty inner positions are disabled, so they do not fall back to typing letters.
 
 ## Clicks - hold outer top-right
 
