@@ -1,7 +1,8 @@
-# Miryoku Chocofi layout
+# Miryoku for 42-key Corne
 
-Colemak-DH, Miryoku-inspired ZMK configuration for a 36-key Chocofi using
-**nice!nano nRF52840 controllers** and optional nice!view displays. The `dongle`
+Colemak-DH, Miryoku-inspired ZMK configuration for Alex's **42-key Corne** with
+a 36-key typing core, six outer utility keys, **nice!nano nRF52840 controllers**
+and optional nice!view displays. The `dongle`
 branch supports a **Prospector USB dongle (XIAO BLE)** and standalone use with
 only the two keyboard halves.
 
@@ -39,15 +40,27 @@ See ZMK's [dongle guide](https://zmk.dev/docs/hardware-integration/dongle) and
 
 Edit `config/corne.keymap`, or use the
 [Keymap Editor](https://nickcoutsos.github.io/keymap-editor/) with the `dongle` branch.
-The Corne transform has 42 positions; six unused outer-column positions are
-`&none`, leaving 36 physical keys.
+All 42 Corne positions are active. The 36-key typing core keeps its existing
+layout; the outer columns add these shortcuts based on the local Omarchy Mac
+setup and saved CleanShot preferences:
+
+| Outer row | Left half | Right half |
+| --- | --- | --- |
+| Top | Previous Desktop (`⌃←`) | CleanShot area capture (`⌘⇧4`) |
+| Middle | Mission Control (`⌃↑`) | CleanShot fullscreen (`⌘⇧3`) |
+| Bottom | Next Desktop (`⌃→`) | Tap: CleanShot All-In-One (`⌘⇧5`); hold: Button layer |
+
+These six keys fall through to Base on every other layer. Holding the bottom
+right outer key opens Button without taking either Hyper key away. Its layer-tap
+uses ZMK's default 200 ms tapping term. The layout image above illustrates the
+typing core; this table describes the additional outer keys.
 
 | Index | Layer | Base-layer access |
 | --- | --- | --- |
 | 0 | Base | Default |
 | 1 | Nav | Hold Space |
 | 2 | Mouse | Hold Tab |
-| 3 | Button | Currently unbound |
+| 3 | Button | Hold bottom right outer key |
 | 4 | Media | Hold Escape |
 | 5 | Num | Hold Backspace |
 | 6 | Sym | Hold Enter |
@@ -57,6 +70,11 @@ Both Hyper keys send **left Ctrl + left Alt/Option + left Shift + left GUI/Comma
 `LS(LA(LC(LGUI)))`. Left Hyper taps `Z`; right Hyper taps `/`. The direct Hyper
 bindings on Nav, Mouse, Media, Num, Sym and Fun send the same modifier combination.
 The right key retains `&hmr` for its timing and opposite-hand triggers.
+
+The active Omarchy Mac `hidutil` mapping changes right Command to left Option
+(`~/omarchy-mac/local/bin/mac-keyremap`). That mapping can remove Command from
+the former all-right Hyper chord. Left Command avoids it; no Mac remaps or app
+preferences need changing for these firmware bindings.
 
 Existing hold-tap tuning is preserved: 280 ms tapping term, 175 ms quick-tap,
 150 ms prior-idle guard, balanced flavor, opposite-hand triggers and
@@ -122,9 +140,9 @@ branch refs and the build container are not a complete dependency lock.
 - Test the same Raycast shortcut with both base Hyper keys and direct layer Hyper
   keys. Modifier sides now match; recognition on the Mac still needs testing.
 - Test ordinary `z` and `/`, double-tap repeats, fast rolls, Hyper chords,
-  wake/reconnect, battery readings and both operating modes.
-- Button lost its base access when `Z` and `/` changed from layer-taps to Hyper.
-  Its contents are preserved; choose a new binding if it is needed.
+  wake/reconnect, battery readings, all six outer keys and both operating modes.
+  CleanShot must be running. Desktop switching needs existing Desktops; add them
+  manually in Mission Control if needed.
 - `config/boards/shields/corn/` is an older unused definition. Current builds use
   `config/boards/shields/corne/`; editing `corn/` has no effect.
 - BLE host profiles are 0–4, but Media exposes only 0–2 plus clear-current-profile.
