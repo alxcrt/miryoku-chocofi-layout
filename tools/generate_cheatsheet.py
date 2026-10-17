@@ -52,9 +52,9 @@ SYSTEM = [('Q / W','Mac / Omarchy','Mac / Omarchy'),
           ('F','Omarchy menu','Omarchy menu'),('P','Fullscreen capture','Record / stop'),
           ('B','Capture menu','Screenshot OCR'),('J','Ghostty','Terminal'),
           ('L','Helium','Browser'),('U','Shortcut guide','Keybindings'),('Y','Area capture','Screenshot')]
-OUTER = [('Top','Tap Raycast; hold Hyper','Tap one-shot Hyper; hold Hyper', 'Tap menu; hold Super','Tap one-shot Super; hold Super'),
-         ('Middle','Clipboard history','Helium browser','Clipboard manager','Browser'),
-         ('Bottom','Quick terminal','Capture menu; hold Clicks','Scratchpad','Capture menu; hold Clicks')]
+OUTER = [('Top','Tap Raycast; hold Hyper','Capture menu; hold Clicks', 'Tap menu; hold Super','Capture menu; hold Clicks'),
+         ('Middle','Caps Word','Clipboard history','Caps Word','Clipboard manager'),
+         ('Bottom','Quick terminal','Tap one-shot Hyper; hold Hyper','Scratchpad','Tap one-shot Super; hold Super')]
 
 # Guard against silently rendering a reference for a different-sized layout.
 parsed = {}
@@ -63,12 +63,15 @@ for m in re.finditer(r'(\w+)_layer\s*\{\s*(?://[^\n]*\n\s*)?bindings\s*=\s*<([\s
 assert len(parsed) == 13 and all(len(v) == 42 for v in parsed.values())
 assert parsed['mac'][24] == '&kp LG(GRAVE)' and parsed['omarchy'][24] == '&kp LG(GRAVE)'
 assert parsed['mac'][0] == '&launcher LS(LA(LC(LGUI))) LG(SPACE)'
-assert parsed['mac'][35] == '&lt 4 LG(LS(N5))'
-assert parsed['omarchy'][35] == '&lt 4 LG(LC(C))'
-assert parsed['mac'][11] == '&hyper LS(LA(LC(LGUI))) LS(LA(LC(LGUI)))'
-assert parsed['omarchy'][11] == '&hyper LGUI LGUI'
+assert parsed['mac'][11] == '&lt 4 LG(LS(N5))'
+assert parsed['omarchy'][11] == '&lt 4 LG(LC(C))'
+assert parsed['mac'][35] == '&hyper LS(LA(LC(LGUI))) LS(LA(LC(LGUI)))'
+assert parsed['omarchy'][35] == '&hyper LGUI LGUI'
 assert parsed['system'][9] == '&kp LG(LS(N4))' and parsed['omarchy_system'][9] == '&kp PSCRN'
 assert parsed['mac'][25] == '&kp Z' and parsed['mac'][34] == '&kp SLASH'
+assert parsed['mac'][12] == parsed['omarchy'][12] == '&caps_word'
+assert parsed['mac'][23] == '&kp LS(LA(LC(LG(V))))'
+assert parsed['omarchy'][23] == '&kp LG(LC(V))'
 
 # Read each layer's printable actions from its real bindings. Base labels are
 # only location hints; the grid must follow source edits, not a copied diagram.
@@ -169,15 +172,15 @@ def key(x,y,w,h,label,sub='',accent=False):
         while pdfmetrics.stringWidth(sub,'Body',size)>w-4:size-=.2
         C.setFont('Body',size);C.setFillColor(MUTED);C.drawCentredString(x+w/2,y+4,sub)
 
-header(1,'Your everyday keys','Tap for typing. Hold a thumb for a layer. Use the letters printed below.')
+header(1,'Your everyday keys','Caps Word for UPPER_CASE. Hyper for shortcuts. Hold a thumb for a layer.')
 box(40,701,W-80,30)
 text(50,713,'HOST MODE',8,True,TEAL)
 text(120,713,'Hold Escape + Q = Mac     |     Hold Escape + W = Omarchy',9,True)
 text(40,684,'BASE / MAC UTILITIES',10,True)
 kw,gap,split=35,4,32
 start=(W-(12*kw+10*gap+split))/2
-leftouter=[('Raycast','H: Hyper'),('Clipboard',''),('Quick term','Cmd + `')]
-rightouter=[('Hyper','Tap: 1-shot'),('Browser','Helium'),('Capture','H: Clicks')]
+leftouter=[('Raycast','H: Hyper'),('Caps Word','UPPER_CASE'),('Quick term','Cmd + `')]
+rightouter=[('Capture','H: Clicks'),('Clipboard',''),('Hyper','Tap: 1-shot')]
 mods={'A':'H: Cmd','R':'H: Alt','S':'H: Ctrl','T':'H: Shift','N':'H: Shift','E':'H: Ctrl','I':'H: Alt','O':'H: Cmd'}
 for row,letters in enumerate(BASE):
     y=646-row*35
@@ -188,13 +191,13 @@ for row,letters in enumerate(BASE):
     key(rx+5*(kw+gap),y,kw,30,*rightouter[row],accent=True)
 for j,(name,layer) in enumerate(THUMBS[:3]):key(start+(j+3)*(kw+gap),539,kw,29,name,'H: '+layer)
 for j,(name,layer) in enumerate(THUMBS[3:]):key(rx+j*(kw+gap),539,kw,29,name,'H: '+layer)
-text(40,525,'H = hold. Right top: tap, then a shortcut within 1.5 sec; or hold for normal Hyper.',8,color=MUTED)
+text(40,525,'H = hold. Right bottom: tap, then a shortcut within 1.5 sec; or hold for normal Hyper.',8,color=MUTED)
 
 heading(40,503,'Six outer keys - same purpose on both hosts')
 table(40,491,W-80,['Position','Mac: left / right','Omarchy: left / right'],[
- ('Top','Raycast/Hyper  |  Sticky Hyper','Menu/Super  |  Sticky Super'),
- ('Middle','Clipboard  |  Helium','Clipboard  |  Browser'),
- ('Bottom','Quick terminal  |  Capture/Clicks','Scratchpad  |  Capture menu/Clicks')], [.13,.435,.435],rh=23,size=8)
+ ('Top','Raycast/Hyper  |  Capture/Clicks','Menu/Super  |  Capture/Clicks'),
+ ('Middle','Caps Word  |  Clipboard','Caps Word  |  Clipboard'),
+ ('Bottom','Quick terminal  |  Sticky Hyper','Scratchpad  |  Sticky Super')], [.13,.435,.435],rh=23,size=8)
 
 heading(40,378,'Hyper shortcuts - Mac')
 text(40,363,'Hyper = left Ctrl + Alt + Shift + Cmd',8,color=TEAL)
@@ -231,7 +234,7 @@ for title,hold,rows,note in LAYERS:
 
 # Layer detail that is useful, without turning the sheet into a firmware manual.
 text(40,76,'CLICKS',8,True,TEAL)
-text(102,76,'Hold outer bottom-right. Left thumbs: Middle / Left / Right click.',7.5)
+text(102,76,'Hold outer top-right. Left thumbs: Middle / Left / Right click.',7.5)
 text(102,64,'Right thumbs: Right / Left / Middle click. Clipboard shortcuts on both hands.',7.5)
 text(40,48,'* Mac hidutil maps Caps Lock to Escape. Navigate H sends Browser Home, not a document Home key.',7,color=MUTED)
 text(40,37,'System: N/E/I = previous track / volume down / volume up; H/,/. = Bluetooth profiles 1/2/3; / clears current pairing.',6.8,color=MUTED)
@@ -246,11 +249,11 @@ md=['# Corne cheat sheet','',
     '| --- | --- | --- | --- | --- |']
 md += ['| '+' | '.join(r)+' |' for r in OUTER]
 md += ['', 'Mac quick terminal: **Command + backtick (`)**. Linux scratchpad: **Super + backtick**; put a terminal there first with **Super + Shift + backtick**.',
-       '', 'Left top taps the launcher and holds Hyper/Super. Right top taps one-shot Hyper/Super: release it, then press the shortcut within 1.5 seconds. It releases after that target key press, or times out unused; it does not lock. Hold it for an ordinary modifier chord. Left top has a 180 ms hold-preferred term; capture/Clicks has the default 200 ms layer-tap.',
-       '', '## Thumb layers','', '| Tap key; hold for | Layer |','| --- | --- |']
+       '', 'Left top taps the launcher and holds Hyper/Super. Right bottom taps one-shot Hyper/Super: release it, then press the shortcut within 1.5 seconds. It releases after that target key press, or times out unused; it does not lock. Hold it for an ordinary modifier chord. Left top has a 180 ms hold-preferred term; capture/Clicks has the default 200 ms layer-tap.',
+       '', '## Caps Word', '', 'Tap the left-middle outer key for uppercase words and identifiers such as `MY_VARIABLE`. Letters, digits, underscores, Backspace and Delete continue it. A space or another separator ends it; tap Caps Word again to turn it off. This is word-by-word capitalization, not a persistent Caps Lock. Browser access remains on Hyper+B (Mac) or System + L.', '', '## Thumb layers','', '| Tap key; hold for | Layer |','| --- | --- |']
 md += [f'| {a} | {b} |' for a,b in THUMBS]
-md += ['| Outer bottom-right | Clicks |','', '## Hyper - Mac','',
-       '**Hyper = left Control + Option/Alt + Shift + Command.** Both outer top keys provide it. Z and / type normally.','', '| Hyper + | Opens |','| --- | --- |']
+md += ['| Outer top-right | Clicks |','', '## Hyper - Mac','',
+       '**Hyper = left Control + Option/Alt + Shift + Command.** The left-top and right-bottom outer keys provide it. Z and / type normally.','', '| Hyper + | Opens |','| --- | --- |']
 md += [f'| {a} | {b} |' for a,b in HYPER]
 md += ['', '## System - hold Escape','', '| Base letter | Mac | Omarchy |','| --- | --- | --- |']
 md += ['| '+' | '.join(r)+' |' for r in SYSTEM]
@@ -265,7 +268,7 @@ for title,hold,rows,note in LAYERS:
     md += ['```', '',note]
 md += ['', 'Navigate/Mouse clipboard row, right side: **J redo, L paste, U copy, Y cut, apostrophe undo**. Mac uses Command; Omarchy uses its universal Super copy/paste/cut and Control undo/redo.',
        '', '**Caps (asterisk)** sends Caps Lock; your Mac remaps it to Escape. **Browser home** sends the consumer Browser Home action, not a document Home key.',
-       '', '## Clicks - hold outer bottom-right','',
+       '', '## Clicks - hold outer top-right','',
        '- Left thumbs: middle / left / right mouse button.',
        '- Right thumbs: right / left / middle mouse button.',
        '- Left top/bottom rows: Q/W/F/P/B or Z/X/C/D/V = undo/cut/copy/paste/redo.',
@@ -278,7 +281,7 @@ md += ['', 'Navigate/Mouse clipboard row, right side: **J redo, L paste, U copy,
        '| K | Toggle USB / Bluetooth output |','| H / comma / dot | Bluetooth profiles 1 / 2 / 3 |',
        '| Slash | Clear the selected Bluetooth profile pairing |',
        '', 'Use the Bluetooth host controls in standalone mode. In dongle mode, the Prospector normally outputs through USB. Clearing a host profile removes that saved host pairing.',
-       '', '## Optional next features (not enabled)', '', '- [Caps Word](https://zmk.dev/docs/keymaps/behaviors/caps-word): uppercase words and identifiers, then leave on a separator.', '- [Key Repeat](https://zmk.dev/docs/keymaps/behaviors/key-repeat): send the last key again.', '- [Sticky layers](https://zmk.dev/docs/keymaps/behaviors/sticky-layer): tap once for one symbol or number, then return to typing.', '', '## Source and refresh','',
+       '', '## Optional next features (not enabled)', '', '- [Key Repeat](https://zmk.dev/docs/keymaps/behaviors/key-repeat): send the last key again.', '- [Sticky layers](https://zmk.dev/docs/keymaps/behaviors/sticky-layer): tap once for one symbol or number, then return to typing.', '', '## Source and refresh','',
        'Reference: `config/corne.keymap` and the Mac Raycast assignments documented in `README.md`. Native Omarchy shortcuts require its standard bindings. The Numbers/Symbols/F-keys grids share the same placement on both hosts.',
        '', 'PDF: [Printable cheat sheet](output/pdf/corne-cheatsheet.pdf). Rebuild with `python3 tools/generate_cheatsheet.py` in an environment with ReportLab installed.']
 MD.write_text('\n'.join(md)+'\n')

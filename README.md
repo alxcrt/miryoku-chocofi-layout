@@ -59,7 +59,7 @@ host; they are not extra layers to remember or activate by hand.
 | --- | --- | --- |
 | Navigate | Hold Space | Arrows, editing and clipboard |
 | Mouse | Hold Tab | Pointer, scroll and mouse buttons |
-| Clicks | Hold bottom right outer key | Mouse buttons and clipboard on both hands |
+| Clicks | Hold top right outer key | Mouse buttons and clipboard on both hands |
 | System | Hold Escape | Host mode, capture tools, media, output and Bluetooth |
 | Numbers | Hold Backspace | Numpad and numeric punctuation |
 | Symbols | Hold Enter | Programming symbols |
@@ -69,28 +69,36 @@ host; they are not extra layers to remember or activate by hand.
 
 | Outer row | Left, Mac | Right, Mac | Left, Omarchy | Right, Omarchy |
 | --- | --- | --- | --- | --- |
-| Top | Tap: Raycast (`⌘Space`); hold: Hyper | Tap: one-shot Hyper; hold: Hyper | Tap: Omarchy menu (`Super+Space`); hold: Super | Tap: one-shot Super; hold: Super |
-| Middle | Clipboard History (`Hyper+V`) | Helium browser (`Hyper+B`) | Clipboard manager (`Super+Ctrl+V`) | Browser (`Super+Shift+Enter`) |
-| Bottom | Quick terminal (`⌘` + backtick) | Capture menu (`⌘⇧5`); hold: Clicks | Scratchpad (`Super` + backtick) | Capture menu (`Super+Ctrl+C`); hold: Clicks |
+| Top | Tap: Raycast (`⌘Space`); hold: Hyper | Capture menu (`⌘⇧5`); hold: Clicks | Tap: Omarchy menu (`Super+Space`); hold: Super | Capture menu (`Super+Ctrl+C`); hold: Clicks |
+| Middle | Caps Word | Clipboard History (`Hyper+V`) | Caps Word | Clipboard manager (`Super+Ctrl+V`) |
+| Bottom | Quick terminal (`⌘` + backtick) | Tap: one-shot Hyper; hold: Hyper | Scratchpad (`Super` + backtick) | Tap: one-shot Super; hold: Super |
 
 All outer keys remain available on the other layers. The left top key uses a
 180 ms hold-preferred behavior: another key press selects Hyper/Super
 immediately; a tap opens the launcher on release. It has no home-row prior-idle
-or opposite-hand restriction. The right top key also uses a 180 ms hold-preferred behavior: tap it and
+or opposite-hand restriction. The right bottom key also uses a 180 ms
+hold-preferred behavior: tap it and
 release, then press a shortcut letter within 1.5 seconds for one-shot
 Hyper/Super; hold it with another key for an ordinary modifier chord. The
 one-shot is lazy (no host modifier before the target key), releases on the
 target key press, and keeps `ignore-modifiers` enabled for the combined Hyper
 modifier. It does not lock on. Direct layer Hyper keys remain ordinary held
-modifiers. The bottom right key uses the default 200 ms layer-tap.
+modifiers. The top right capture key uses the default 200 ms layer-tap.
 The image above illustrates the typing core; this table describes its six
 additional utility keys.
 
-`Z` and `/` are ordinary keys. Both outer Hyper keys and the direct layer
+`Z` and `/` are ordinary keys. The left top / right bottom Hyper keys and the direct layer
 Hyper bindings send **left Ctrl + Alt/Option + Shift + GUI/Command**:
 `LS(LA(LC(LGUI)))`. The active local Omarchy Mac `hidutil` mapping changes
 right Command to left Option (`~/omarchy-mac/local/bin/mac-keyremap`), which
 can remove Command from an all-right Hyper chord. Left Command avoids it.
+
+Tap **Caps Word** on the outer left-middle key to uppercase the next word or
+identifier (`MY_VARIABLE`). Letters, numbers, underscores and corrections
+continue it; a space or other separator ends it. Tap Caps Word again to turn
+it off. It uses Shift rather than a Caps Lock keycode, so the Mac
+Caps-Lock-to-Escape remap does not interfere. Browser access stays on
+`Hyper+B` or System + L.
 
 The ordinary home-row modifiers retain their existing 280 ms tapping term,
 175 ms quick-tap, 150 ms prior-idle guard, balanced flavor, opposite-hand
@@ -217,7 +225,7 @@ branch refs and the build container are not a complete dependency lock.
   manually in Mission Control if needed. Linux commands need Omarchy running.
 - `config/boards/shields/corn/` is an older unused definition. Current builds use
   `config/boards/shields/corne/`; editing `corn/` has no effect.
-- BLE host profiles are 0–4, but Media exposes only 0–2 plus clear-current-profile.
+- BLE host profiles are 0–4, but System exposes only 0–2 plus clear-current-profile.
   Add next/previous profile bindings if more are needed.
 - Battery runtime, RSSI and end-to-end latency have not been measured by this
   source review. Compilation alone cannot establish those results.

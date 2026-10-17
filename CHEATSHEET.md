@@ -8,13 +8,17 @@
 
 | Position | Mac left | Mac right | Omarchy left | Omarchy right |
 | --- | --- | --- | --- | --- |
-| Top | Tap Raycast; hold Hyper | Tap one-shot Hyper; hold Hyper | Tap menu; hold Super | Tap one-shot Super; hold Super |
-| Middle | Clipboard history | Helium browser | Clipboard manager | Browser |
-| Bottom | Quick terminal | Capture menu; hold Clicks | Scratchpad | Capture menu; hold Clicks |
+| Top | Tap Raycast; hold Hyper | Capture menu; hold Clicks | Tap menu; hold Super | Capture menu; hold Clicks |
+| Middle | Caps Word | Clipboard history | Caps Word | Clipboard manager |
+| Bottom | Quick terminal | Tap one-shot Hyper; hold Hyper | Scratchpad | Tap one-shot Super; hold Super |
 
 Mac quick terminal: **Command + backtick (`)**. Linux scratchpad: **Super + backtick**; put a terminal there first with **Super + Shift + backtick**.
 
-Left top taps the launcher and holds Hyper/Super. Right top taps one-shot Hyper/Super: release it, then press the shortcut within 1.5 seconds. It releases after that target key press, or times out unused; it does not lock. Hold it for an ordinary modifier chord. Left top has a 180 ms hold-preferred term; capture/Clicks has the default 200 ms layer-tap.
+Left top taps the launcher and holds Hyper/Super. Right bottom taps one-shot Hyper/Super: release it, then press the shortcut within 1.5 seconds. It releases after that target key press, or times out unused; it does not lock. Hold it for an ordinary modifier chord. Left top has a 180 ms hold-preferred term; capture/Clicks has the default 200 ms layer-tap.
+
+## Caps Word
+
+Tap the left-middle outer key for uppercase words and identifiers such as `MY_VARIABLE`. Letters, digits, underscores, Backspace and Delete continue it. A space or another separator ends it; tap Caps Word again to turn it off. This is word-by-word capitalization, not a persistent Caps Lock. Browser access remains on Hyper+B (Mac) or System + L.
 
 ## Thumb layers
 
@@ -26,11 +30,11 @@ Left top taps the launcher and holds Hyper/Super. Right top taps one-shot Hyper/
 | Enter | Symbols |
 | Backspace | Numbers |
 | Delete | F-keys |
-| Outer bottom-right | Clicks |
+| Outer top-right | Clicks |
 
 ## Hyper - Mac
 
-**Hyper = left Control + Option/Alt + Shift + Command.** Both outer top keys provide it. Z and / type normally.
+**Hyper = left Control + Option/Alt + Shift + Command.** The left-top and right-bottom outer keys provide it. Z and / type normally.
 
 | Hyper + | Opens |
 | --- | --- |
@@ -130,7 +134,7 @@ Navigate/Mouse clipboard row, right side: **J redo, L paste, U copy, Y cut, apos
 
 **Caps (asterisk)** sends Caps Lock; your Mac remaps it to Escape. **Browser home** sends the consumer Browser Home action, not a document Home key.
 
-## Clicks - hold outer bottom-right
+## Clicks - hold outer top-right
 
 - Left thumbs: middle / left / right mouse button.
 - Right thumbs: right / left / middle mouse button.
@@ -153,7 +157,6 @@ Use the Bluetooth host controls in standalone mode. In dongle mode, the Prospect
 
 ## Optional next features (not enabled)
 
-- [Caps Word](https://zmk.dev/docs/keymaps/behaviors/caps-word): uppercase words and identifiers, then leave on a separator.
 - [Key Repeat](https://zmk.dev/docs/keymaps/behaviors/key-repeat): send the last key again.
 - [Sticky layers](https://zmk.dev/docs/keymaps/behaviors/sticky-layer): tap once for one symbol or number, then return to typing.
 
