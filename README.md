@@ -8,6 +8,8 @@ only the two keyboard halves.
 
 ![Miryoku Chocofi base layout](assets/layout.png)
 
+[Cheat sheet](CHEATSHEET.md) · [Printable two-page PDF](output/pdf/corne-cheatsheet.pdf)
+
 ## Firmware and flashing
 
 Download the `firmware` artifact from a successful GitHub Actions run on `dongle`.
@@ -67,15 +69,20 @@ host; they are not extra layers to remember or activate by hand.
 
 | Outer row | Left, Mac | Right, Mac | Left, Omarchy | Right, Omarchy |
 | --- | --- | --- | --- | --- |
-| Top | Tap: Raycast (`⌘Space`); hold: Hyper | Immediate Hyper | Tap: Omarchy menu (`Super+Space`); hold: Super | Immediate Super |
+| Top | Tap: Raycast (`⌘Space`); hold: Hyper | Tap: one-shot Hyper; hold: Hyper | Tap: Omarchy menu (`Super+Space`); hold: Super | Tap: one-shot Super; hold: Super |
 | Middle | Clipboard History (`Hyper+V`) | Helium browser (`Hyper+B`) | Clipboard manager (`Super+Ctrl+V`) | Browser (`Super+Shift+Enter`) |
-| Bottom | Quick terminal (`⌘` + backtick) | CleanShot area (`⌘⇧4`); hold: Clicks | Scratchpad (`Super` + backtick) | Screenshot (`Print`); hold: Clicks |
+| Bottom | Quick terminal (`⌘` + backtick) | Capture menu (`⌘⇧5`); hold: Clicks | Scratchpad (`Super` + backtick) | Capture menu (`Super+Ctrl+C`); hold: Clicks |
 
 All outer keys remain available on the other layers. The left top key uses a
 180 ms hold-preferred behavior: another key press selects Hyper/Super
 immediately; a tap opens the launcher on release. It has no home-row prior-idle
-or opposite-hand restriction. Use the right top key for an immediate modifier
-with no tap behavior. The bottom right key uses the default 200 ms layer-tap.
+or opposite-hand restriction. The right top key also uses a 180 ms hold-preferred behavior: tap it and
+release, then press a shortcut letter within 1.5 seconds for one-shot
+Hyper/Super; hold it with another key for an ordinary modifier chord. The
+one-shot is lazy (no host modifier before the target key), releases on the
+target key press, and keeps `ignore-modifiers` enabled for the combined Hyper
+modifier. It does not lock on. Direct layer Hyper keys remain ordinary held
+modifiers. The bottom right key uses the default 200 ms layer-tap.
 The image above illustrates the typing core; this table describes its six
 additional utility keys.
 
@@ -129,6 +136,7 @@ The System layer adds these shortcuts, using the letters printed by Base:
 | B | CleanShot All-In-One | Screenshot text recognition (OCR) |
 | J / L | Ghostty / Helium | Terminal / browser |
 | U | Shortcut guide (`Hyper+K`) | Keybindings (`Super+K`) |
+| Y | Area screenshot (`⌘⇧4`) | Screenshot (`Print`) |
 
 Hold **Space + Q** for Mission Control on Mac; **Space + W / F** switches
 previous / next Desktop on Mac or workspace on Omarchy.
@@ -202,7 +210,8 @@ branch refs and the build container are not a complete dependency lock.
 - Test the same Raycast shortcut with both outer Hyper keys and direct
   layer Hyper keys. Modifier sides match; recognition on the Mac needs testing.
 - Test ordinary `z` and `/`, home-row rolls, Hyper chords, host switching,
-  automatic editing layers, capture-menu tap versus Clicks hold, wake/reconnect,
+  automatic editing layers, one-shot Hyper timeout and fast letter rolls,
+  capture-menu tap versus Clicks hold, wake/reconnect,
   battery readings and both dongle and standalone modes.
   CleanShot must be running. Test launcher taps versus Hyper holds and quick-terminal show/hide. Desktop switching needs existing Desktops; add them
   manually in Mission Control if needed. Linux commands need Omarchy running.
