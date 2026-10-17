@@ -7,10 +7,12 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      # Latest ZMK main verified 2026-10-18; includes Zephyr 4.1 support.
+      revision: 4dd95d7840eb3d5a3f59bb29fbf1ab054715ef85
       import: app/west.yml
     - name: prospector-zmk-module
       remote: carrefinho
-      revision: feat/new-status-screens
+      # Latest feat/new-status-screens; keep the custom screen layouts.
+      revision: ed98221f3b52b7066dbb10ba3af8a29150b93a5a
   self:
     path: config
